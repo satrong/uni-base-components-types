@@ -1,6 +1,6 @@
 {
   "name": "uni-base-components-types",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "uni-app基础组件的类型提示",
   "typings": "uni-base-components.d.ts",
   "scripts": {
@@ -24,5 +24,10 @@
     "@types/node": "^17.0.21",
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
-  }
+  },
+  "files": [
+    "index.d.ts",
+    "README.md",
+    "LICENSE"
+  ]
 }
