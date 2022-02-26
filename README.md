@@ -11,12 +11,12 @@ npm i -D uni-base-components-types
 ```
 
 2. 配置 _ts.config.json_ 文件
-在 `types` 字段中添加 `uni-base-components`
+在 `types` 字段中添加 `uni-base-components-types`
 
 ```json
 {
   "compilerOptions": {
-    "types": ["uni-base-components"],
+    "types": ["uni-base-components-types"],
   },
 }
 ```
