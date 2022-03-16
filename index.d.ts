@@ -304,7 +304,7 @@ type TPicker = TComponent<{
   /** 是否禁用。 */
   disabled: boolean;
   /** SD（标清）, HD（高清）, FHD（超清）, RTC（实时通话）  */
-  mode: 'RTC' | 'SD' | 'HD' | 'FHD';
+  mode: 'selector' | 'multiSelector' | 'time' | 'date' | 'region';
   /** mode为 selector 或 multiSelector 时，range 有效 */
   range: any[];
   /** 当 range 是一个 Object Array 时，通过 range-key 来指定 Object 中 key 的值作为选择器显示内容 */
