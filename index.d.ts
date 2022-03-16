@@ -485,8 +485,8 @@ type TImage = TComponent<{
   loop: boolean;
   /** webview 指向网页的链接 */
   src: string | string;
-  /** SD（标清）, HD（高清）, FHD（超清）, RTC（实时通话）  */
-  mode: 'RTC' | 'SD' | 'HD' | 'FHD';
+  /** 图片裁剪、缩放的模式 */
+  mode: 'scaleToFill' | 'aspectFit' | 'aspectFill' | 'widthFix' | 'heightFix' | 'top' | 'bottom' | 'center' | 'left' | 'right' | 'top left' | 'top right' | 'bottom left' | 'bottom right';
   /** 图片懒加载。只针对page与scroll-view下的image有效 */
   lazyLoad: boolean;
   /** 图片显示动画效果 */
@@ -644,8 +644,8 @@ type TCamera = TComponent<{
 type TLivePlayer = TComponent<{
   /** webview 指向网页的链接 */
   src: string | string;
-  /** SD（标清）, HD（高清）, FHD（超清）, RTC（实时通话）  */
-  mode: 'RTC' | 'SD' | 'HD' | 'FHD';
+  /** live（直播），RTC（实时通话，该模式时延更低） */
+  mode: 'live' | 'RTC';
   /** 自动播放 */
   autoplay: boolean;
   /** 是否静音 */
@@ -666,8 +666,8 @@ type TLivePlayer = TComponent<{
 type TLivePusher = TComponent<{
   /** 推流地址。目前仅支持 flv, rtmp 格式 */
   url: string;
-  /** SD（标清）, HD（高清）, FHD（超清）, RTC（实时通话）  */
-  mode: 'RTC' | 'SD' | 'HD' | 'FHD';
+  /** 推流视频模式，可取值：SD（标清）, HD（高清）, FHD（超清）。 */
+  mode: 'SD' | 'HD' | 'FHD';
   /** 自动推流 */
   autopush: boolean;
   /** 是否静音 */
