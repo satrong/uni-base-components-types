@@ -303,7 +303,7 @@ type TLabel = TComponent<{
 type TPicker = TComponent<{
   /** 是否禁用。 */
   disabled: boolean;
-  /** SD（标清）, HD（高清）, FHD（超清）, RTC（实时通话）  */
+  /** selector 普通选择器, multiSelector 多列选择器, time 时间选择器, date 日期选择器, region 省市区选择器 */
   mode: 'selector' | 'multiSelector' | 'time' | 'date' | 'region';
   /** mode为 selector 或 multiSelector 时，range 有效 */
   range: any[];

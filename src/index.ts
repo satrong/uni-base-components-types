@@ -3,6 +3,7 @@ import * as path from 'path'
 
 import TAGS from '@dcloudio/uni-helper-json/dist/tags.json'
 import ATTRS from '@dcloudio/uni-helper-json/dist/attributes.json'
+import FIX from './fix'
 
 import { baseTpl } from './tpl'
 
@@ -52,12 +53,16 @@ async function bootstrap() {
     let attrs: Record<string, any>[] = []
     if (val.attributes) {
       attrs = [...new Set(val.attributes)].map(el => {
+        if (FIX[key]?.[el]) {
+          return { attrName: el, ...FIX[key][el] }
+        }
+
         const v = ATTRS[el as keyof typeof ATTRS]
         if (v) return { attrName: el, ...v }
         return null
       }).filter(Boolean) as Record<string, any>[]
     }
-    contents.push(tpl(key, attrs, val.description))
+    contents.push(tpl(key, attrs, val.description || ''))
     tags.push(toCamel(key))
   }
 
