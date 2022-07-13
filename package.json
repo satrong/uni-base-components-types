@@ -3,11 +3,11 @@
   "version": "2.0.0-beta.0",
   "description": "uni-app基础组件的类型提示",
   "typings": "uni-base-components.d.ts",
-  "scripts": {
-    "build": "ts-node src/index.ts"
-  },
+  "scripts": {},
   "keywords": [
-    "uni-app"
+    "uni-app",
+    "uniapp",
+    "type"
   ],
   "author": {
     "name": "satrong",
@@ -25,7 +25,6 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
-    "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
   },
   "files": [
