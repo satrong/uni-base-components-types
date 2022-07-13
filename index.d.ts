@@ -779,11 +779,70 @@ type TText = TComponent<
   {}
 >;
 
-/** 富文本 */
+/**
+ * @desc rich-text 文本节点
+ */
+type TRichTextTextNode = {
+  type: "text";
+  text: string;
+};
+/**
+ * @desc rich-text 元素节点
+ */
+type TRichTextNodeNode = {
+  type?: "node";
+  name: string;
+  attrs?: Record<string, any>;
+  children?: Array<TRichTextTextNode | TRichTextNodeNode>;
+};
+/**
+ * @desc rich-text 节点
+ */
+type TRichTextNode = TRichTextTextNode | TRichTextNodeNode;
+/**
+ * @desc rich-text itemclick 事件对象
+ */
+type TRichTextItemclickEvent = TBaseEvent & {
+  detail: {
+    node: TRichTextNode;
+  };
+};
+/**
+ * @desc 富文本
+ * */
 type TRichText = TComponent<
   {
-    /** 节点列表 */
-    nodes: any[];
+    /**
+     * @desc 节点列表
+     * @desc
+     */
+    nodes: TRichTextNode[] | string;
+    /**
+     * @desc 显示连续空格
+     * @desc 没有默认值
+     */
+    space: "ensp" | "emsp" | "nbsp";
+    /**
+     * @desc 富文本是否可以长按选中
+     * @desc 默认为 true
+     */
+    selectable: boolean;
+    /**
+     * @desc 是否阻止长按图片时弹起默认菜单
+     * @desc 只在初始化时有效，不能动态变更
+     * @desc 默认为 false
+     */
+    imageMenuPrevent: boolean;
+    /**
+     * @desc 富文本中的图片是否可点击预览
+     * @desc 在不设置的情况下，若 rich-text 未监听点击事件，则默认开启
+     * @desc 未显示设置 preview 时会进行点击默认预览判断，建议显示设置 preview
+     */
+    preview: boolean;
+    /**
+     * @desc 拦截点击事件，支持 a 和 img 标签
+     */
+    onItemclick: (event: TRichTextItemclickEvent) => void;
   },
   {}
 >;
@@ -1585,8 +1644,8 @@ declare module "@vue/runtime-core" {
     CoverImage: TCoverImage;
     Icon: TIcon;
     Text: TText;
-
     RichText: TRichText;
+
     Progress: TProgress;
     Button: TButton;
     CheckboxGroup: TCheckboxGroup;
