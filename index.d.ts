@@ -1484,12 +1484,16 @@ type TInput = TComponent<
   {}
 >;
 
-/** 用来改进表单组件的可用性，使用for属性找到对应的id，或者将控件放在该标签下，当点击时，就会触发对应的控件 */
+/**
+ * @desc 用来改进表单组件的可用性
+ * @desc 使用 for 属性找到对应的 id，或者将控件放在该标签下，当点击时，就会触发对应的控件
+ * @desc for 优先级高于内部控件，内部有多个控件的时候默认触发第一个控件
+ */
 type TLabel = TComponent<
   {
-    /** 是否禁用。 */
-    disabled: boolean;
-    /** 绑定控件的 id */
+    /**
+     * @desc 绑定控件的 id
+     */
     for: string;
   },
   {}
