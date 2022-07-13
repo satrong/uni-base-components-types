@@ -726,6 +726,29 @@ type TCoverImage = TComponent<
   {}
 >;
 
+/**
+ * @desc 图标
+ */
+type TIcon = TComponent<
+  {
+    /**
+     * @desc icon 的类型
+     */
+    type: string;
+    /**
+     * @desc icon 的大小
+     * @desc 单位为 px
+     * @desc 默认为 23
+     */
+    size: number;
+    /**
+     * @desc icon 的颜色
+     */
+    color: string;
+  },
+  {}
+>;
+
 /** 文本 */
 type TText = TComponent<
   {
@@ -1285,19 +1308,6 @@ type TWebView = TComponent<
   {}
 >;
 
-/** 图标 */
-type TIcon = TComponent<
-  {
-    /** 开放数据类型 */
-    type: string;
-    /** 按钮的大小 */
-    size: "default" | "mini";
-    /** switch 的颜色，同 css 的 color */
-    color: string;
-  },
-  {}
->;
-
 /** 仅可放置于 picker-view 中，其孩子节点的高度会自动设置成与picker-view的选中框的高度一致 */
 type TPickerViewColumn = TComponent<
   {
@@ -1556,6 +1566,7 @@ declare module "@vue/runtime-core" {
     MovableView: TMovableView;
     CoverView: TCoverView;
     CoverImage: TCoverImage;
+    Icon: TIcon;
 
     Text: TText;
     RichText: TRichText;
@@ -1580,8 +1591,6 @@ declare module "@vue/runtime-core" {
     Map: TMap;
     Canvas: TCanvas;
     WebView: TWebView;
-
-    Icon: TIcon;
     PickerViewColumn: TPickerViewColumn;
     Camera: TCamera;
     LivePlayer: TLivePlayer;
