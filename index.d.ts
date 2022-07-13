@@ -265,17 +265,10 @@ type TScrollView = TComponent<
      */
     enableBackToTop: boolean;
     /**
-     * @desc 是否启用 flexbox 布局
-     * @desc 开启后，当前节点声明了 display: flex 就会成为 flex container，并作用于其子节点
+     * @desc 控制是否出现滚动条
      * @desc 默认为 false
      */
-    enableFlex: boolean;
-    /**
-     * @desc 是否开启 scroll anchoring 特性，即控制滚动位置不随内容变化而抖动，仅在 iOS 下生效
-     * @desc 安卓下可参考 CSS overflow-anchor 属性
-     * @desc 默认为 false
-     */
-    scrollAnchoring: boolean;
+    showScrollbar: boolean;
     /**
      * @desc 是否开启自定义下拉刷新
      * @desc 默认为 false
@@ -304,35 +297,17 @@ type TScrollView = TComponent<
      */
     refresherTriggered: boolean;
     /**
-     * @desc 启用 scroll-view 增强特性
-     * @desc 启用后可通过 ScrollViewContext 操作 scroll-view
+     * @desc 是否启用 flexbox 布局
+     * @desc 开启后，当前节点声明了 display: flex 就会成为 flex container，并作用于其子节点
      * @desc 默认为 false
      */
-    enhanced: boolean;
+    enableFlex: boolean;
     /**
-     * @desc iOS 下 scroll-view 边界弹性控制
-     * @desc 同时开启 enhanced 属性后生效
-     * @desc 默认为 true
-     */
-    bounces: boolean;
-    /**
-     * @desc 滚动条显隐控制
-     * @desc 同时开启 enhanced 属性后生效
-     * @desc 默认为 true
-     */
-    showScrollbar: boolean;
-    /**
-     * @desc 分页滑动效果
-     * @desc 同时开启 enhanced 属性后生效
+     * @desc 是否开启 scroll anchoring 特性，即控制滚动位置不随内容变化而抖动，仅在 iOS 下生效
+     * @desc 安卓下可参考 CSS overflow-anchor 属性
      * @desc 默认为 false
      */
-    pagingEnabled: boolean;
-    /**
-     * @desc 滑动减速速率控制
-     * @desc 同时开启 enhanced 属性后生效
-     * @desc 默认为 false
-     */
-    fastDeceleration: boolean;
+    scrollAnchoring: boolean;
     /**
      * @desc 滚动到顶部/左边时触发
      */
