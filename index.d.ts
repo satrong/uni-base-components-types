@@ -500,10 +500,15 @@ type TSwiper = TComponent<
   {}
 >;
 
-/** 仅可放置在 swiper 组件中，宽高自动设置为100% */
+/**
+ * @desc swiper 直接子组件
+ * @desc 仅可放置在 swiper 组件中，宽高自动设置为 100%，不能被子组件自动撑开
+ */
 type TSwiperItem = TComponent<
   {
-    /** 该 swiper-item 的标识符 */
+    /**
+     * @desc 该 swiper-item 的标识符
+     */
     itemId: string;
   },
   {}
