@@ -1258,43 +1258,228 @@ type TForm = TComponent<
   {}
 >;
 
+/**
+ * @desc input input 事件对象
+ */
+type TInputInputEvent = TEvent & {
+  detail: {
+    value: string;
+  };
+};
+/**
+ * @desc input focus 事件对象
+ */
+type TInputFocusEvent = TEvent & {
+  detail: {
+    value: string;
+    height: number;
+  };
+};
+/**
+ * @desc input blur 事件对象
+ */
+type TInputBlurEvent = TEvent & {
+  detail: {
+    value: string;
+  };
+};
+/**
+ * @desc input confirm 事件对象
+ */
+type TInputConfirmEvent = TEvent & {
+  detail: {
+    value: string;
+  };
+};
+/**
+ * @desc input keyboardheightchange 事件对象
+ */
+type TInputKeyboardheightchangeEvent = TEvent & {
+  detail: {
+    height: number;
+    duration: number;
+  };
+};
 /** 输入框 */
 type TInput = TComponent<
   {
-    /** 是否禁用。 */
-    disabled: boolean;
-    /** radio当前取值 */
-    value: number;
-    /** 开放数据类型 */
-    type: string;
-    /** 是否是密码类型 */
+    /**
+     * @desc 在 form 中作为 key
+     */
+    name: string;
+    /**
+     * @desc 输入框的初始内容
+     */
+    value: string;
+    /**
+     * @desc input 类型
+     * @desc 默认为 text
+     */
+    type:
+      | "text"
+      | "number"
+      | "idcard"
+      | "digit"
+      | "tel"
+      | "safe-password"
+      | "nickname";
+    /**
+     * @desc 文本区域的语义，根据类型自动填充
+     */
+    textContentType: "oneTimeCode";
+    /**
+     * @desc 是否是密码类型
+     * @desc 默认为 false
+     */
     password: boolean;
-    /** 提示信息。 */
+    /**
+     * @desc 输入框为空时占位符
+     */
     placeholder: string;
-    /** 指定 placeholder 的样式 */
+    /**
+     * @desc 指定 placeholder 的样式
+     */
     placeholderStyle: string;
-    /** 指定 placeholder 的样式类 */
+    /**
+     * @desc 指定 placeholder 的样式类
+     * @desc 默认为 input-placeholder
+     */
     placeholderClass: string;
-    /** 最大输入长度，设置为 -1 的时候不限制最大长度 */
+    /**
+     * @desc 是否禁用
+     * @desc 默认为 false
+     */
+    disabled: boolean;
+    /**
+     * @desc 最大输入长度
+     * @desc 设置为 -1 的时候不限制最大长度
+     * @desc 默认为 140
+     */
     maxlength: number;
-    /** 指定光标与键盘的距离，单位 px 。取 textarea 距离底部的距离和 cursor-spacing 指定的距离的最小值作为光标与键盘的距离 */
+    /**
+     * @desc 指定光标与键盘的距离
+     * @desc 取 textarea 距离底部的距离和 cursor-spacing 指定的距离的最小值作为光标与键盘的距离
+     * @desc 单位为 px
+     * @desc 默认为 0
+     */
     cursorSpacing: number;
-    /** 获取焦点 */
-    autoFocus: boolean;
-    /** 获取焦点 */
+    /**
+     * @desc 是否获取焦点
+     * @desc 默认为 false
+     */
     focus: boolean;
-    /** 设置键盘右下角按钮的文字 */
+    /**
+     * @desc 设置键盘右下角按钮的文字
+     * @desc type="text" 时生效
+     */
     confirmType: "send" | "search" | "next" | "go" | "done";
-    /** 点击键盘右下角按钮时是否保持键盘不收起 */
+    /**
+     * @desc 点击键盘右下角按钮时是否保持键盘不收起
+     * @desc 默认为 false
+     */
     confirmHold: boolean;
-    /** 指定focus时的光标位置 */
+    /**
+     * @desc 指定 focus 时的光标位置
+     */
     cursor: number;
-    /**  光标起始位置，自动聚集时有效，需与selection-end搭配使用 */
+    /**
+     * @desc 光标起始位置，自动聚焦时有效，需与 selection-end 搭配使用
+     * @desc 默认为 -1
+     */
     selectionStart: number;
-    /**  光标结束位置，自动聚集时有效，需与selection-satrt搭配使用 */
+    /**
+     * @desc 光标结束位置，自动聚焦时有效，需与 selection-start 搭配使用
+     * @desc 默认为 -1
+     */
     selectionEnd: number;
-    /** 键盘弹起时，是否自动上推页面 */
+    /**
+     * @desc 键盘弹起时，是否自动上推页面
+     * @desc 默认为 true
+     */
     adjustPosition: boolean;
+    /**
+     * @desc 聚焦时，点击页面的时候是否不收起键盘
+     * @desc 默认为 false
+     */
+    holdKeyboard: boolean;
+    /**
+     * @desc 键盘收起时，是否自动失焦
+     * @desc 默认为 false
+     */
+    autoBlur: boolean;
+    /**
+     * @desc 是否忽略组件内对文本合成系统事件的处理
+     * @desc 为 false 时将触发 compositionstart、compositionend、compositionupdate 事件，且在文本合成期间会触发 input 事件
+     * @desc 默认为 true
+     */
+    ignoreCompositionEvent: boolean;
+    /**
+     * @desc 是否强制 input 处于同层状态，仅在 iOS 生效
+     * @desc 默认聚焦时 input 会切到非同层状态
+     * @desc 默认为 false
+     */
+    alwaysEmbed: boolean;
+    /**
+     * @desc 安全键盘加密公钥的路径，只支持包内路径
+     */
+    safePasswordCertPath: string;
+    /**
+     * @desc 安全键盘输入密码长度
+     */
+    safePasswordLength: number;
+    /**
+     * @desc 安全键盘加密时间戳
+     */
+    safePasswordTimeStamp: number;
+    /**
+     * @desc 安全键盘加密盐值
+     */
+    safePasswordNonce: string;
+    /**
+     * @desc 安全键盘计算 hash 盐值，若指定 custom-hash 则无效
+     */
+    safePasswordSalt: string;
+    /**
+     * @desc 安全键盘计算 hash 的算法表达式
+     */
+    safePasswordCustomHash: string;
+    /**
+     * @desc 当 type 为 number、digit、idcard 时，数字键盘是否随机排列
+     * @desc 默认为 false
+     */
+    randomNumber: boolean;
+    /**
+     * @desc 是否为受控组件
+     * @desc 为 true 时，value 内容会完全受 setData 控制
+     * @desc 默认为 false
+     */
+    controlled: boolean;
+    /**
+     * @desc 是否强制使用系统键盘和 Web-view 创建的 input 元素
+     * @desc 为 true 时，confirm-type、confirm-hold 可能失效
+     * @desc 默认为 false
+     */
+    alwaysSystem: boolean;
+    /**
+     * @desc 输入时触发
+     */
+    onInput: (event: TInputInputEvent) => string | void;
+    /**
+     * @desc 聚焦时触发
+     */
+    onFocus: (event: TInputFocusEvent) => void;
+    /**
+     * @desc 失焦时触发
+     */
+    onBlur: (event: TInputBlurEvent) => void;
+    /**
+     * @desc 点击完成按钮时触发
+     */
+    onConfirm: (event: TInputConfirmEvent) => void;
+    /**
+     * @desc 键盘高度变化时触发
+     */
+    onKeyboardheightchange: (event: TInputKeyboardheightchangeEvent) => void;
   },
   {}
 >;
