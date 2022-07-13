@@ -749,14 +749,31 @@ type TIcon = TComponent<
   {}
 >;
 
-/** 文本 */
+/**
+ * @desc 文本组件
+ * @desc 用于包裹文本内容
+ */
 type TText = TComponent<
   {
-    /** 文本是否可选 */
+    /**
+     * @desc 文本是否可选
+     * @desc 默认为 false
+     */
     selectable: boolean;
-    /** 显示连续空格 */
+    /**
+     * @desc 文本是否可选，可能会使文本节点显示为 inline-block
+     * @desc 默认为 false
+     */
+    userSelect: boolean;
+    /**
+     * @desc 显示连续空格
+     * @desc 没有默认值
+     */
     space: "ensp" | "emsp" | "nbsp";
-    /** 是否解码 */
+    /**
+     * @desc 是否解码
+     * @desc 默认为 false
+     */
     decode: boolean;
   },
   {}
@@ -1567,8 +1584,8 @@ declare module "@vue/runtime-core" {
     CoverView: TCoverView;
     CoverImage: TCoverImage;
     Icon: TIcon;
-
     Text: TText;
+
     RichText: TRichText;
     Progress: TProgress;
     Button: TButton;
