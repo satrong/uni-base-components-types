@@ -33,7 +33,7 @@ type TComponent<
 /**
  * @desc 通用事件对象
  */
-type TBaseEvent = {
+type TEvent = {
   /**
    * @desc 事件类型
    */
@@ -191,7 +191,7 @@ type TView = TComponent<
 /**
  * @desc scroll-view scroll 事件对象
  */
-type TScrollViewScrollEvent = TBaseEvent & {
+type TScrollViewScrollEvent = TEvent & {
   detail: {
     scrollLeft: number;
     scrollTop: number;
@@ -300,11 +300,11 @@ type TScrollView = TComponent<
     /**
      * @desc 滚动到顶部/左边时触发
      */
-    onScrolltoupper: (event: TBaseEvent) => void;
+    onScrolltoupper: (event: TEvent) => void;
     /**
      * @desc 滚动到底部/右边时触发
      */
-    onScrolltolower: (event: TBaseEvent) => void;
+    onScrolltolower: (event: TEvent) => void;
     /**
      * @desc 滚动时触发
      */
@@ -312,19 +312,19 @@ type TScrollView = TComponent<
     /**
      * @desc 自定义下拉刷新控件被下拉时触发
      */
-    onRefresherpulling: (event: TBaseEvent) => void;
+    onRefresherpulling: (event: TEvent) => void;
     /**
      * @desc 自定义下拉刷新被触发时触发
      */
-    onRefresherrefresh: (event: TBaseEvent) => void;
+    onRefresherrefresh: (event: TEvent) => void;
     /**
      * @desc 自定义下拉刷新被复位时触发
      */
-    onRefresherrestore: (event: TBaseEvent) => void;
+    onRefresherrestore: (event: TEvent) => void;
     /**
      * @desc 自定义下拉刷新被中止时触发
      */
-    onRefresherabort: (event: TBaseEvent) => void;
+    onRefresherabort: (event: TEvent) => void;
   },
   {}
 >;
@@ -332,7 +332,7 @@ type TScrollView = TComponent<
 /**
  * @desc swiper change 事件对象
  */
-type TSwiperChangeEvent = TBaseEvent & {
+type TSwiperChangeEvent = TEvent & {
   detail: {
     current: number;
     source: any; // TODO: better types
@@ -341,7 +341,7 @@ type TSwiperChangeEvent = TBaseEvent & {
 /**
  * @desc swiper transition 事件对象
  */
-type TSwiperTransitionEvent = TBaseEvent & {
+type TSwiperTransitionEvent = TEvent & {
   detail: {
     dx: number;
     dy: number;
@@ -350,7 +350,7 @@ type TSwiperTransitionEvent = TBaseEvent & {
 /**
  * @desc swiper animationfinish 事件对象
  */
-type TSwiperAnimationfinishEvent = TBaseEvent & {
+type TSwiperAnimationfinishEvent = TEvent & {
   detail: {
     current: number;
     source: any; // TODO: better types
@@ -567,7 +567,7 @@ type TMovableArea = TComponent<
 /**
  * @desc movable-view change 事件对象
  */
-type TMovableViewChangeEvent = TBaseEvent & {
+type TMovableViewChangeEvent = TEvent & {
   detail: {
     x: number;
     y: number;
@@ -577,7 +577,7 @@ type TMovableViewChangeEvent = TBaseEvent & {
 /**
  * @desc movable-view scale 事件对象
  */
-type TMovableViewScaleEvent = TBaseEvent & {
+type TMovableViewScaleEvent = TEvent & {
   detail: {
     x: number;
     y: number;
@@ -707,11 +707,11 @@ type TCoverImage = TComponent<
     /**
      * @desc 图片加载成功时触发
      */
-    onLoad: (event: TBaseEvent) => void;
+    onLoad: (event: TEvent) => void;
     /**
      * @desc 图片加载失败时触发
      */
-    onError: (event: TBaseEvent) => void;
+    onError: (event: TEvent) => void;
   },
   {}
 >;
@@ -792,7 +792,7 @@ type TRichTextNode = TRichTextTextNode | TRichTextNodeNode;
 /**
  * @desc rich-text itemclick 事件对象
  */
-type TRichTextItemclickEvent = TBaseEvent & {
+type TRichTextItemclickEvent = TEvent & {
   detail: {
     node: TRichTextNode;
   };
@@ -898,7 +898,7 @@ type TProgress = TComponent<
     /**
      * @desc 动画完成时触发
      */
-    onActiveend: (event: TBaseEvent) => void;
+    onActiveend: (event: TEvent) => void;
   },
   {}
 >;
@@ -1048,51 +1048,51 @@ type TButton = TComponent<
      * @desc 获取用户手机号时回调
      * @desc open-type="getPhoneNumber" 时有效
      */
-    onGetphonenumber: (event: TBaseEvent) => void;
+    onGetphonenumber: (event: TEvent) => void;
     /**
      * @desc 使用开放能力发生错误时回调
      */
-    onError: (event: TBaseEvent) => void;
+    onError: (event: TEvent) => void;
     /**
      * @desc 在打开授权设置页并关闭后回调
      * @desc open-type="openSetting" 时有效
      */
-    onOpensetting: (event: TBaseEvent) => void;
+    onOpensetting: (event: TEvent) => void;
     /**
      * @desc 从小程序成功打开 APP 回调
      * @desc open-type="launchApp" 时有效
      */
-    onLaunchapp: (event: TBaseEvent) => void;
+    onLaunchapp: (event: TEvent) => void;
     /**
      * @desc 获取用户头像回调
      * @desc open-type="chooseAvatar" 时有效
      */
-    onChooseavatar: (event: TBaseEvent) => void;
+    onChooseavatar: (event: TEvent) => void;
     /**
      * @desc 添加群应用回调
      * @desc open-type="addGroupApp" 时有效
      */
-    onAddgroupapp: (event: TBaseEvent) => void;
+    onAddgroupapp: (event: TEvent) => void;
     /**
      * @desc 用户编辑并选择收货地址回调
      * @desc open-type="chooseAddress" 时有效
      */
-    onChooseaddress: (event: TBaseEvent) => void;
+    onChooseaddress: (event: TEvent) => void;
     /**
      * @desc 用户选择发票抬头回调
      * @desc open-type="chooseInvoiceTitle" 时有效
      */
-    onChooseinvoicetitle: (event: TBaseEvent) => void;
+    onChooseinvoicetitle: (event: TEvent) => void;
     /**
      * @desc 订阅消息授权回调
      * @desc open-type="subscribe" 时有效
      */
-    onSubscribe: (event: TBaseEvent) => void;
+    onSubscribe: (event: TEvent) => void;
     /**
      * @desc 登录回调
      * @desc open-type="login" 时有效
      */
-    onLogin: (event: TBaseEvent) => void;
+    onLogin: (event: TEvent) => void;
   },
   {}
 >;
