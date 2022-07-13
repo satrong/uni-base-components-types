@@ -334,7 +334,7 @@ type TScrollView = TComponent<
         detail: {
           scrollLeft: number;
           scrollTop: number;
-          scrollHeight: umber;
+          scrollHeight: number;
           scrollWidth: number;
           deltaX: number;
           deltaY: number;
