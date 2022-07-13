@@ -35,16 +35,35 @@ type TComponent<
  */
 type TBlock = TComponent<{}, {}>;
 
-/** 基本视图容器 */
+/**
+ * @desc 视图容器
+ * @desc 类似于 div，用于包裹各种元素内容
+ * @desc 如果使用 nvue，包裹文字应该使用 text 组件
+ */
 type TView = TComponent<
   {
-    /** 指定按下去的样式类。当 hover-class="none" 时，没有点击态效果 */
+    /**
+     * @desc 指定按下去的样式类
+     * @desc 当 hover-class="none" 时，没有点击态效果
+     * @desc 默认为 none
+     */
     hoverClass: string;
-    /** 指定是否阻止本节点的祖先节点出现点击态 */
+    /**
+     * @desc 指定是否阻止本节点的祖先节点出现点击态
+     * @desc 默认为 false
+     */
     hoverStopPropagation: boolean;
-    /** 按住后多久出现点击态，单位毫秒 */
+    /**
+     * @desc 按住后多久出现点击态
+     * @desc 单位为毫秒
+     * @desc 默认为 50
+     */
     hoverStartTime: number;
-    /** 手指松开后点击态保留时间，单位毫秒 */
+    /**
+     * @desc 手指松开后点击态保留时间
+     * @desc 单位为毫秒
+     * @desc 默认为 400
+     */
     hoverStayTime: number;
   },
   {}
