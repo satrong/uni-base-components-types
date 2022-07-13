@@ -1145,6 +1145,72 @@ type TCheckbox = TComponent<
   {}
 >;
 
+/**
+ * @desc editor focus、blur、input 事件对象
+ */
+type TEditorEvent = TEvent & {
+  detail: {
+    html: string;
+    text: string;
+    delta: Record<string, any>;
+  };
+};
+/**
+ * @desc 富文本编辑器，可以对图片、文字进行编辑和混排
+ * @desc 编辑器导出内容支持带标签的 html 和纯文本的 text，编辑器内部采用 delta 格式进行存储
+ * @desc 通过 setContents 接口设置内容时，解析插入的 html 可能会由于一些非法标签导致解析错误，建议开发者在应用内使用时通过 delta 进行插入
+ * @desc 图片控件仅初始化时设置有效
+ */
+type TEditor = TComponent<
+  {
+    /**
+     * @desc 是否只读
+     * @desc 默认为 false
+     */
+    readOnly: boolean;
+    /**
+     * @desc 提示信息
+     */
+    placeholder: string;
+    /**
+     * @desc 点击图片时是否显示图片大小控件
+     * @desc 默认为 false
+     */
+    showImgSize: boolean;
+    /**
+     * @desc 点击图片时是否显示工具栏控件
+     * @desc 默认为 false
+     */
+    showImgToolbar: boolean;
+    /**
+     * @desc 点击图片时是否显示修改尺寸控件
+     * @desc 默认为 false
+     */
+    showImgResize: string;
+    /**
+     * @desc 编辑器初始化完成时触发
+     */
+    onReady: (event: TEvent) => void;
+    /**
+     * @desc 编辑器聚焦时触发
+     */
+    onFocus: (event: TEditorEvent) => void;
+    /**
+     * @desc 编辑器失焦时触发
+     */
+    onBlur: (event: TEditorEvent) => void;
+    /**
+     * @desc 编辑器内容改变时触发
+     */
+    onInput: (event: TEditorEvent) => void;
+    /**
+     * @desc 通过 Context 方法改变编辑器内样式时触发，返回选区已设置的样式
+     */
+    onStatuschange: (event: TEvent) => void;
+  },
+  {}
+>;
+
 /** 表单 */
 type TForm = TComponent<
   {
@@ -1777,23 +1843,6 @@ type TPageMeta = TComponent<
     rootFontSize: string;
     /**  */
     enablePullDownRefresh: boolean;
-  },
-  {}
->;
-
-/** 富文本编辑器，可以对图片、文字进行编辑。 */
-type TEditor = TComponent<
-  {
-    /** 设置编辑器为只读。 */
-    readOnly: boolean;
-    /** 提示信息。 */
-    placeholder: string;
-    /** 点击图片时显示图片大小控件。 */
-    showImgSize: boolean;
-    /** 点击图片时显示工具栏控件。 */
-    showImgToolbar: boolean;
-    /** 点击图片时显示修改尺寸控件。 */
-    showImgResize: string;
   },
   {}
 >;
