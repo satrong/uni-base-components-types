@@ -903,50 +903,196 @@ type TProgress = TComponent<
   {}
 >;
 
-/** 按钮 */
+/**
+ * @desc 按钮
+ */
 type TButton = TComponent<
   {
-    /** 是否禁用。 */
-    disabled: boolean;
-    /** 指定按下去的样式类。当 hover-class="none" 时，没有点击态效果 */
-    hoverClass: string;
-    /** 指定是否阻止本节点的祖先节点出现点击态 */
-    hoverStopPropagation: boolean;
-    /** 按住后多久出现点击态，单位毫秒 */
-    hoverStartTime: number;
-    /** 手指松开后点击态保留时间，单位毫秒 */
-    hoverStayTime: number;
-    /** 按钮的大小 */
+    /**
+     * @desc 按钮的大小
+     * @desc 默认为 default
+     */
     size: "default" | "mini";
-    /** 开放数据类型 */
-    type: string;
-    /** 按钮是否镂空，背景色透明 */
+    /**
+     * @desc 按钮的样式类型
+     * @desc 默认为 default
+     */
+    type: "primary" | "default" | "warn";
+    /**
+     * @desc 按钮是否镂空，背景色透明
+     * @desc 默认为 false
+     */
     plain: boolean;
-    /** 是否在导航条显示 loading 加载提示 */
+    /**
+     * @desc 是否禁用
+     */
+    disabled: boolean;
+    /**
+     * @desc 是否带 loading 图标
+     * @desc 默认为 false
+     */
     loading: boolean;
-    /** 用于 form 组件，点击分别会触发 form 组件的 submit/reset 事件 */
+    /**
+     * @desc 用于 form 组件，点击分别会触发 form 组件的 submit / reset 事件
+     * @desc 没有默认值
+     */
     formType: "submit" | "reset";
-    /** 跳转方式 */
+    /**
+     * @desc 开放能力
+     */
     openType:
-      | "navigate"
-      | "redirect"
-      | "switchTab"
-      | "reLaunch"
-      | "navigateBack";
-    /**  */
-    lang: "ts";
-    /** 会话来源 */
-    sessionFrom: string;
-    /** 会话内消息卡片标题 */
-    sendMessageTitle: string;
-    /** 会话内消息卡片点击跳转应用路径 */
-    sendMessagePath: string;
-    /** 会话内消息卡片图片 */
-    sendMessageImg: string;
-    /** 显示会话内消息卡片 */
-    showMessageCard: boolean;
-    /** 打开 APP 时，向 APP 传递的参数 */
+      | "feedback"
+      | "share"
+      | "getUserInfo"
+      | "contact"
+      | "getPhoneNumber"
+      | "launchApp"
+      | "openSetting"
+      | "chooseAvatar"
+      | "getAuthorize"
+      | "lifestyle"
+      | "contactShare"
+      | "openGroupProfile"
+      | "openGuildProfile"
+      | "openPublicProfile"
+      | "shareMessageToFriend"
+      | "addFriend"
+      | "addColorSign"
+      | "addGroupApp"
+      | "addToFavorites"
+      | "chooseAddress"
+      | "chooseInvoiceTitle"
+      | "login"
+      | "subscribe"
+      | "favorite"
+      | "watchLater"
+      | "openProfile";
+    /**
+     * @desc 指定按下去的样式类
+     * @desc 当 hover-class="none" 时，没有点击态效果
+     * @desc 默认为 button-hover
+     */
+    hoverClass: string;
+    /**
+     * @desc 按住后多久出现点击态
+     * @desc 单位为 ms
+     * @desc 默认为 20
+     */
+    hoverStartTime: number;
+    /**
+     * @desc 手指松开后点击态保留时间
+     * @desc 单位为 ms
+     * @desc 默认为 70
+     */
+    hoverStayTime: number;
+    /**
+     * @desc 打开 APP 时，向 APP 传递的参数
+     * @desc open-type="launchApp" 时有效
+     */
     appParameter: string;
+    /**
+     * @desc 指定是否阻止本节点的祖先节点出现点击态
+     * @desc 默认为 false
+     */
+    hoverStopPropagation: boolean;
+    /**
+     * @desc 指定返回用户信息的语言
+     */
+    lang: "zh_CN" | "zh_TW" | "en";
+    /**
+     * @desc 会话来源
+     * @desc open-type="contact" 时有效
+     */
+    sessionFrom: string;
+    /**
+     * @desc 会话内消息卡片标题
+     * @desc open-type="contact" 时有效
+     * @desc 默认为当前标题
+     */
+    sendMessageTitle: string;
+    /**
+     * @desc 会话内消息卡片点击跳转小程序路径
+     * @desc open-type="contact" 时有效
+     * @desc 默认为当前分享路径
+     */
+    sendMessagePath: string;
+    /**
+     * @desc 会话内消息卡片图片
+     * @desc open-type="contact" 时有效
+     * @desc 默认为截图
+     */
+    sendMessageImg: string;
+    /**
+     * @desc 是否显示会话内消息卡片
+     * @desc 设置此参数为 true，用户进入客服会话会在右下角显示"可能要发送的小程序"提示，用户点击后可以快速发送小程序消息
+     * @desc open-type="contact" 时有效
+     * @desc 默认为 false
+     */
+    showMessageCard: boolean;
+    /**
+     * @desc 打开群资料卡时，传递的群号
+     * @desc open-type="openGroupProfile" 时有效
+     */
+    groupId: string;
+    /**
+     * @desc 打开频道页面时，传递的频道号
+     * @desc open-type="openGuildProfile" 时有效
+     */
+    guildId: string;
+    /**
+     * @desc 打开公众号资料卡时，传递的号码
+     * @desc open-type="openPublicProfile" 时有效
+     */
+    publicId: string;
+    /**
+     * @desc 获取用户手机号时回调
+     * @desc open-type="getPhoneNumber" 时有效
+     */
+    onGetphonenumber: (event: TBaseEvent) => void;
+    /**
+     * @desc 使用开放能力发生错误时回调
+     */
+    onError: (event: TBaseEvent) => void;
+    /**
+     * @desc 在打开授权设置页并关闭后回调
+     * @desc open-type="openSetting" 时有效
+     */
+    onOpensetting: (event: TBaseEvent) => void;
+    /**
+     * @desc 从小程序成功打开 APP 回调
+     * @desc open-type="launchApp" 时有效
+     */
+    onLaunchapp: (event: TBaseEvent) => void;
+    /**
+     * @desc 获取用户头像回调
+     * @desc open-type="chooseAvatar" 时有效
+     */
+    onChooseavatar: (event: TBaseEvent) => void;
+    /**
+     * @desc 添加群应用回调
+     * @desc open-type="addGroupApp" 时有效
+     */
+    onAddgroupapp: (event: TBaseEvent) => void;
+    /**
+     * @desc 用户编辑并选择收货地址回调
+     * @desc open-type="chooseAddress" 时有效
+     */
+    onChooseaddress: (event: TBaseEvent) => void;
+    /**
+     * @desc 用户选择发票抬头回调
+     * @desc open-type="chooseInvoiceTitle" 时有效
+     */
+    onChooseinvoicetitle: (event: TBaseEvent) => void;
+    /**
+     * @desc 订阅消息授权回调
+     * @desc open-type="subscribe" 时有效
+     */
+    onSubscribe: (event: TBaseEvent) => void;
+    /**
+     * @desc 登录回调
+     * @desc open-type="login" 时有效
+     */
+    onLogin: (event: TBaseEvent) => void;
   },
   {}
 >;
@@ -1235,9 +1381,9 @@ type TNavigator = TComponent<
     hoverClass: string;
     /** 指定是否阻止本节点的祖先节点出现点击态 */
     hoverStopPropagation: boolean;
-    /** 按住后多久出现点击态，单位毫秒 */
+    /** 按住后多久出现点击态，单位为 ms */
     hoverStartTime: number;
-    /** 手指松开后点击态保留时间，单位毫秒 */
+    /** 手指松开后点击态保留时间，单位为 ms */
     hoverStayTime: number;
   },
   {}
