@@ -1,12 +1,14 @@
 {
   "name": "uni-base-components-types",
-  "version": "1.1.1",
+  "version": "2.0.0-beta.0",
   "description": "uni-app基础组件的类型提示",
   "typings": "uni-base-components.d.ts",
   "scripts": {
     "build": "ts-node src/index.ts"
   },
-  "keywords": ["uni-app"],
+  "keywords": [
+    "uni-app"
+  ],
   "author": {
     "name": "satrong",
     "email": "satrong@163.com",
@@ -18,7 +20,8 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@dcloudio/uni-helper-json": "^1.0.13"
+    "@dcloudio/uni-helper-json": "^1.0.13",
+    "vue3": "npm:vue@3"
   },
   "devDependencies": {
     "@types/node": "^17.0.21",
