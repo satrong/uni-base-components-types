@@ -1696,34 +1696,50 @@ declare module "@vue/runtime-core" {
     Button: TButton;
     CheckboxGroup: TCheckboxGroup;
     Checkbox: TCheckbox;
+    Editor: TEditor;
     Form: TForm;
     Input: TInput;
     Label: TLabel;
     Picker: TPicker;
     PickerView: TPickerView;
+    PickerViewColumn: TPickerViewColumn;
     RadioGroup: TRadioGroup;
     Radio: TRadio;
     Slider: TSlider;
     Switch: TSwitch;
     Textarea: TTextarea;
+
     Navigator: TNavigator;
+
     Audio: TAudio;
+    Camera: TCamera;
     Image: TImage;
     Video: TVideo;
-    Map: TMap;
-    Canvas: TCanvas;
-    WebView: TWebView;
-    PickerViewColumn: TPickerViewColumn;
-    Camera: TCamera;
     LivePlayer: TLivePlayer;
     LivePusher: TLivePusher;
-    OpenData: TOpenData;
+
+    Map: TMap;
+
+    Canvas: TCanvas;
+
+    WebView: TWebView;
+
     Ad: TAd;
     AdDraw: TAdDraw;
+
+    UnicloudDb: TUnicloudDb;
+
+    PageMeta: TPageMeta;
     NavigationBar: TNavigationBar;
     CustomTabBar: TCustomTabBar;
-    PageMeta: TPageMeta;
-    Editor: TEditor;
-    UnicloudDb: TUnicloudDb;
+
+    Barcode: TBarcode;
+    List: TList;
+    Cell: TCell;
+    RecycleList: TRecycleList;
+    Waterfall: TWaterfall;
+    Refresh: TRefresh;
+
+    OpenData: TOpenData;
   }
 }
