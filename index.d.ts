@@ -28,9 +28,10 @@ type TComponent<
   Readonly<ExtractPropTypes<P>>
 >;
 
-/* ---- 事件对象 ---- */
+/* ---- 通用事件对象 ---- */
+
 /**
- * @desc 基础事件对象属性列表
+ * @desc 基础事件对象
  */
 type TBaseEvent = {
   /**
@@ -72,8 +73,9 @@ type TBaseEvent = {
    */
   mark?: Record<string, any>;
 };
+
 /**
- * @desc 自定义事件对象属性列表
+ * @desc 自定义事件对象
  */
 type TCustomEvent = TBaseEvent & {
   /**
@@ -81,8 +83,9 @@ type TCustomEvent = TBaseEvent & {
    */
   detail: Record<string, any>;
 };
+
 /**
- * @desc 触摸事件对象属性列表
+ * @desc 触摸事件对象
  */
 type TTouchEvent = TBaseEvent & {
   /**
@@ -152,18 +155,9 @@ type TTouchEvent = TBaseEvent & {
     y: number;
   }[];
 };
-type TScrollViewCustomEvent = TBaseEvent & {
-  detail: {
-    scrollLeft: number;
-    scrollTop: number;
-    scrollHeight: number;
-    scrollWidth: number;
-    deltaX: number;
-    deltaY: number;
-  };
-};
 
-/* ---- 元素 ---- */
+/* ---- 元素和对应事件对象 ---- */
+
 /**
  * @desc 包装元素，不会在页面中做任何渲染，只接受控制属性
  * @desc 支持在 template 模板中嵌套 template 和 block
@@ -205,6 +199,19 @@ type TView = TComponent<
   {}
 >;
 
+/**
+ * @desc scroll-view scroll 事件对象
+ */
+type TScrollViewScrollEvent = TBaseEvent & {
+  detail: {
+    scrollLeft: number;
+    scrollTop: number;
+    scrollHeight: number;
+    scrollWidth: number;
+    deltaX: number;
+    deltaY: number;
+  };
+};
 /**
  * @desc 可滚动视图区域，用于区域滚动
  * @desc 在 webview 渲染的页面中，区域滚动的性能不及页面滚动
@@ -337,7 +344,7 @@ type TScrollView = TComponent<
     /**
      * @desc 滚动时触发
      */
-    onScroll: (event: TScrollViewCustomEvent) => void;
+    onScroll: (event: TScrollViewScrollEvent) => void;
     /**
      * @desc 自定义下拉刷新控件被下拉时触发
      */
