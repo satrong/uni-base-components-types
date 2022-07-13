@@ -365,72 +365,162 @@ type TScrollView = TComponent<
   {}
 >;
 
-/** media query 匹配检测节点 */
-type TMatchMedia = TComponent<
-  {
-    /** 页面宽度（px 为单位） */
-    width: number;
-    /** 页面最小宽度（px 为单位） */
-    minWidth: number;
-    /** 页面最大宽度（px 为单位） */
-    maxWidth: number;
-    /** 页面高度（px 为单位） */
-    height: number;
-    /** 页面最小高度（px 为单位） */
-    minHeight: number;
-    /** 页面最大高度（px 为单位） */
-    maxHeight: number;
-    /** 画面方向，可选值有 vertical，horizontal */
-    orientation: "vertical" | "horizontal";
-  },
-  {}
->;
-
-/** 滑块视图容器 */
+/**
+ * @desc swiper change 事件对象
+ */
+type TSwiperChangeEvent = TBaseEvent & {
+  detail: {
+    current: number;
+    source: any; // TODO: better types
+  };
+};
+/**
+ * @desc swiper transition 事件对象
+ */
+type TSwiperTransitionEvent = TBaseEvent & {
+  detail: {
+    dx: number;
+    dy: number;
+  };
+};
+/**
+ * @desc swiper animationfinish 事件对象
+ */
+type TSwiperAnimationfinishEvent = TBaseEvent & {
+  detail: {
+    current: number;
+    source: any; // TODO: better types
+  };
+};
+/**
+ * @desc 滑块视图容器
+ * @desc 一般用于左右滑动或上下滑动，比如 banner 轮播图
+ */
 type TSwiper = TComponent<
   {
-    /** 是否显示面板指示点 */
+    /**
+     * @desc 是否显示面板指示点
+     * @desc 默认为 false
+     */
     indicatorDots: boolean;
-    /** 指示点颜色 */
+    /**
+     * @desc 指示点颜色
+     * @desc 默认为 rgba(0, 0, 0, 0.3)
+     */
     indicatorColor: string;
-    /** 当前选中的指示点颜色 */
+    /**
+     * @desc 当前选中的指示点颜色
+     * @desc 默认为 #000
+     */
     indicatorActiveColor: string;
-    /** swiper-item 可见时的 class */
+    /**
+     * @desc swiper-item 可见时的 class
+     */
     activeClass: string;
-    /** acceleration 设置为 {{true}} 时且处于滑动过程中，中间若干屏处于可见时的class */
+    /**
+     * @desc acceleration 设置为 true 时且处于滑动过程中，中间若干屏处于可见时的 class
+     */
     changingClass: boolean;
-    /** 当开启时，会根据滑动速度，连续滑动多屏 */
-    acceleration: boolean;
-    /** 是否禁用代码变动触发 swiper 切换时使用动画。 */
-    disableProgrammaticAnimation: boolean;
-    /** 是否禁止用户 touch 操作 */
-    disableTouch: boolean;
-    /** 是否监听用户的触摸事件 */
-    touchable: boolean;
-    /** 指定 swiper 切换缓动动画类型，有效值：default、linear、easeInCubic、easeOutCubic、easeInOutCubic */
-    easingFunction: string;
-    /** 自动播放 */
+    /**
+     * @desc 是否自动切换
+     * @desc 默认为 false
+     */
     autoplay: boolean;
-    /** 当前所在滑块的 index */
+    /**
+     * @desc 当前所在滑块的下标
+     * @desc 默认为 0
+     */
     current: number;
-    /** 当前所在滑块的 item-id ，不能与 current 被同时指定 */
+    /**
+     * @desc 当前所在滑块的 item-id ，不能与 current 被同时指定
+     */
     currentItemId: string;
-    /** 自动切换时间间隔 */
+    /**
+     * @desc 自动切换时间间隔
+     * @desc 默认为 5000
+     */
     interval: number;
-    /** 指定视频长度 */
+    /**
+     * @desc 滑动动画时长
+     * @desc 默认为 500
+     */
     duration: number;
-    /** 是否采用衔接滑动 */
+    /**
+     * @desc 是否采用衔接滑动，即播放到末尾后重新回到开头
+     * @desc 默认为 false
+     */
     circular: boolean;
-    /** 滑动方向是否为纵向 */
+    /**
+     * @desc 滑动方向是否为纵向
+     * @desc 默认为 false
+     */
     vertical: boolean;
-    /** 前边距，可用于露出前一项的一小部分，接受 px 和 rpx 值 */
+    /**
+     * @desc 前边距，可用于露出前一项的一小部分
+     * @desc 接受 px 和 rpx 值
+     * @desc 默认为 0px
+     */
     previousMargin: string;
-    /** 后边距，可用于露出后一项的一小部分，接受 px 和 rpx 值 */
+    /**
+     * @desc 后边距，可用于露出后一项的一小部分
+     * @desc 接受 px 和 rpx 值
+     * @desc 默认为 0px
+     */
     nextMargin: string;
-    /** 同时显示的滑块数量 */
+    /**
+     * @desc 当开启时，会根据滑动速度，连续滑动多屏
+     * @desc 默认 false
+     */
+    acceleration: boolean;
+    /**
+     * @desc 是否禁用代码变动触发 swiper 切换时使用动画
+     * @desc 默认为 false
+     */
+    disableProgrammaticAnimation: boolean;
+    /**
+     * @desc 同时显示的滑块数量
+     * @desc 默认为 1
+     */
     displayMultipleItems: number;
-    /** 是否跳过未显示的滑块布局，设为 true 可优化复杂情况下的滑动性能，但会丢失隐藏状态滑块的布局信息 */
+    /**
+     * @desc 是否跳过未显示的滑块布局
+     * @desc 设为 true 可优化复杂情况下的滑动性能，但会丢失隐藏状态滑块的布局信息
+     * @desc 默认为 false
+     */
     skipHiddenItemLayout: boolean;
+    /**
+     * @desc 是否禁止用户 touch 操作
+     * @desc 默认为 false
+     */
+    disableTouch: boolean;
+    /**
+     * @desc 是否监听用户的触摸事件
+     * @desc 只在初始化时有效，不能动态变更
+     * @desc 默认为 true
+     */
+    touchable: boolean;
+    /**
+     * @desc 指定 swiper 切换缓动动画类型
+     * @desc 默认为 default
+     */
+    easingFunction:
+      | "default"
+      | "linear"
+      | "easeInCubic"
+      | "easeOutCubic"
+      | "easeInOutCubic";
+    /**
+     * @desc current 改变时触发
+     */
+    onChange: (event: TSwiperChangeEvent) => void;
+    /**
+     * @desc swiper-item 位置改变时触发
+     */
+    onTransition: (event: TSwiperTransitionEvent) => void;
+    /**
+     * @desc 动画结束时触发
+     */
+    onAnimationfinish: (event: TSwiperAnimationfinishEvent) => void;
   },
   {}
 >;
