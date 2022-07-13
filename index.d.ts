@@ -684,6 +684,48 @@ type TMovableView = TComponent<
   {}
 >;
 
+/**
+ * @desc 覆盖在原生组件之上的文本视图
+ * @desc app-vue 和小程序框架，渲染引擎是 webview
+ * @desc 为了优化体验，部分组件如 map、video、textarea、canvas 通过原生控件实现，原生组件层级高于前端组件
+ * @desc 为了能正常覆盖原生组件，设计了cover-view
+ */
+type TCoverView = TComponent<
+  {
+    /**
+     * @desc 设置顶部滚动偏移量
+     * @desc 仅在设置了 overflow-y: scroll 成为滚动元素后生效
+     */
+    scrollTop: number | string;
+  },
+  {}
+>;
+
+/**
+ * @desc 覆盖在原生组件之上的图片视图
+ * @desc 可覆盖的原生组件同 cover-view
+ * @desc 支持嵌套在 cover-view 里
+ */
+type TCoverImage = TComponent<
+  {
+    /**
+     * @desc 图片路径
+     * @desc 支持本地路径、网络路径
+     * @desc 不支持 base64 格式
+     */
+    src: string;
+    /**
+     * @desc 图片加载成功时触发
+     */
+    onLoad: (event: TBaseEvent) => void;
+    /**
+     * @desc 图片加载失败时触发
+     */
+    onError: (event: TBaseEvent) => void;
+  },
+  {}
+>;
+
 /** 文本 */
 type TText = TComponent<
   {
@@ -1243,18 +1285,6 @@ type TWebView = TComponent<
   {}
 >;
 
-/** 覆盖在原生组件之上的文本视图，可覆盖的原生组件包括map、video、canvas、camera，只支持嵌套cover-view、cover-image */
-type TCoverView = TComponent<{}, {}>;
-
-/** 覆盖在原生组件之上的图片视图，可覆盖的原生组件同cover-view，支持嵌套在cover-view里。 */
-type TCoverImage = TComponent<
-  {
-    /** webview 指向网页的链接 */
-    src: string | string;
-  },
-  {}
->;
-
 /** 图标 */
 type TIcon = TComponent<
   {
@@ -1519,11 +1549,14 @@ declare module "@vue/runtime-core" {
     Block: TBlock;
     View: TView;
     ScrollView: TScrollView;
-    MatchMedia: TMatchMedia;
     Swiper: TSwiper;
     SwiperItem: TSwiperItem;
-    MovableView: TMovableView;
+    MatchMedia: TMatchMedia;
     MovableArea: TMovableArea;
+    MovableView: TMovableView;
+    CoverView: TCoverView;
+    CoverImage: TCoverImage;
+
     Text: TText;
     RichText: TRichText;
     Progress: TProgress;
@@ -1547,8 +1580,7 @@ declare module "@vue/runtime-core" {
     Map: TMap;
     Canvas: TCanvas;
     WebView: TWebView;
-    CoverView: TCoverView;
-    CoverImage: TCoverImage;
+
     Icon: TIcon;
     PickerViewColumn: TPickerViewColumn;
     Camera: TCamera;
