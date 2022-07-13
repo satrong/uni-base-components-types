@@ -559,6 +559,23 @@ type TMatchMedia = TComponent<
   {}
 >;
 
+/**
+ * @desc 可拖动区域
+ * @desc 在其中内嵌 movable-view 组件用于指示可拖动的区域
+ * @desc 即手指/鼠标按住 movable-view 拖动或双指缩放，但拖不出 movable-area 规定的范围
+ * @desc 必须设置 width 和 height 属性，不设置默认为 10px
+ */
+type TMovableArea = TComponent<
+  {
+    /**
+     * @desc 当里面的 movable-view 设置为支持双指缩放时，设置此值可将缩放手势生效区域修改为整个 movable-area
+     * @desc 默认为 false
+     */
+    scaleArea: boolean;
+  },
+  {}
+>;
+
 /** 可移动的视图容器，在页面中可以拖拽滑动 */
 type TMovableView = TComponent<
   {
@@ -591,9 +608,6 @@ type TMovableView = TComponent<
   },
   {}
 >;
-
-/** movable-view 的可移动区域 */
-type TMovableArea = TComponent<{}, {}>;
 
 /** 文本 */
 type TText = TComponent<
