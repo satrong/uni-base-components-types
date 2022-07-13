@@ -1124,6 +1124,10 @@ type TCheckboxGroup = TComponent<
 type TCheckbox = TComponent<
   {
     /**
+     * @desc 在 form 中作为 key
+     */
+    name: string;
+    /**
      * @desc checkbox 标识
      * @desc 选中时触发 checkbox-group 的 change 事件并携带 value */
     value: string;
