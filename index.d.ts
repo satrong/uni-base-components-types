@@ -1097,19 +1097,49 @@ type TButton = TComponent<
   {}
 >;
 
-/** 多项选择器，内部由多个checkbox组成 */
-type TCheckboxGroup = TComponent<{}, {}>;
+/**
+ * @desc checkbox-group change 事件对象
+ */
+type TCheckboxGroupChangeEvent = TEvent & {
+  detail: {
+    value: string[];
+  };
+};
+/**
+ * @desc 多项选择器，内部由多个 checkbox 组成
+ */
+type TCheckboxGroup = TComponent<
+  {
+    /**
+     * @desc 选中项发生改变时触发
+     */
+    onChange: (event: TCheckboxGroupChangeEvent) => void;
+  },
+  {}
+>;
 
-/** 多选项目 */
+/**
+ * @desc 多选项目
+ */
 type TCheckbox = TComponent<
   {
-    /** 是否禁用。 */
+    /**
+     * @desc checkbox 标识
+     * @desc 选中时触发 checkbox-group 的 change 事件并携带 value */
+    value: string;
+    /**
+     * @desc 是否禁用
+     * @desc 默认为 false
+     */
     disabled: boolean;
-    /** radio当前取值 */
-    value: number;
-    /** 是否选中 */
+    /**
+     * @desc 当前是否选中，可用于设置默认选中
+     * @desc 默认为 false
+     */
     checked: boolean;
-    /** switch 的颜色，同 css 的 color */
+    /**
+     * @desc checkbox 的颜色
+     */
     color: string;
   },
   {}
