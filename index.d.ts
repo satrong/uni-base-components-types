@@ -1499,27 +1499,256 @@ type TLabel = TComponent<
   {}
 >;
 
-/** 从底部弹起的滚动选择器，现支持五种选择器，通过mode来区分，分别是普通选择器，多列选择器，时间选择器，日期选择器，省市区选择器，默认是普通选择器。 */
-type TPicker = TComponent<
-  {
-    /** 是否禁用。 */
-    disabled: boolean;
-    /** selector 普通选择器, multiSelector 多列选择器, time 时间选择器, date 日期选择器, region 省市区选择器 */
-    mode: "selector" | "multiSelector" | "time" | "date" | "region";
-    /** mode为 selector 或 multiSelector 时，range 有效 */
-    range: any[];
-    /** 当 range 是一个 Object Array 时，通过 range-key 来指定 Object 中 key 的值作为选择器显示内容 */
-    rangeKey: string;
-    /** radio当前取值 */
+/**
+ * @desc picker (selector) change 事件对象
+ */
+type TPickerSelectorChangeEvent = TEvent & {
+  detail: {
     value: number;
-    /** mode为time：表示有效时间范围的开始，字符串格式为"hh:mm"；mode为date：表示有效日期范围的开始，字符串格式为"YYYY-MM-DD" */
+  };
+};
+/**
+ * @desc picker (multiSelector) change 事件对象
+ */
+type TPickerMultiSelectorChangeEvent = TEvent & {
+  detail: {
+    value: number[];
+  };
+};
+/**
+ * @desc picker (multiSelector) columnchange 事件对象
+ */
+type TPickerMultiSelectorColumnChangeEvent = TEvent & {
+  detail: {
+    column: number;
+    value: number;
+  };
+};
+/**
+ * @desc picker (time) change 事件对象
+ */
+type TPickerTimeChangeEvent = TEvent & {
+  detail: {
+    value: string;
+  };
+};
+/**
+ * @desc picker (date) change 事件对象
+ */
+type TPickerDateChangeEvent = TEvent & {
+  detail: {
+    value: string;
+  };
+};
+/**
+ * @desc picker (region) change 事件对象
+ */
+type TPickerRegionChangeEvent = TEvent & {
+  detail: {
+    value: string[];
+  };
+};
+/**
+ * @desc 从底部弹起的滚动选择器，通过 mode 来区分
+ */
+type TPicker = TComponent<
+  | {
+      /**
+       * @desc 在 form 中作为 key
+       */
+      name: string;
+      /**
+       * @desc 设置为普通选择器
+       */
+      mode?: "selector";
+      /**
+       * @desc 需要展示的内容
+       * @desc 默认为 []
+       */
+      range: string[] | Record<string, any>[];
+      /**
+       * @desc 当 range 是一个 Object Array 时，通过 range-key 来指定 Object 中 key 的值作为选择器显示内容
+       */
+      rangeKey: string;
+      /**
+       * @desc 当前选择的下标
+       * @desc 默认为 0
+       */
+      value: number;
+      /**
+       * @desc 大屏时 UI 类型，支持 picker、select、auto
+       * @desc 默认在 iPad 以 picker 样式展示
+       * @desc 默认在 PC 以 select 样式展示
+       * @desc 默认为 auto
+       */
+      selectorType: "auto" | "picker" | "select";
+      /**
+       * @desc 是否禁用
+       * @desc 默认为 false
+       */
+    disabled: boolean;
+      /**
+       * @desc value 改变时触发
+       */
+      onChange: (event: TPickerSelectorChangeEvent) => void;
+      /**
+       * @desc 取消选择时触发
+       */
+      onCancel: (event: TEvent) => void;
+    }
+  | {
+      /**
+       * @desc 在 form 中作为 key
+       */
+      name: string;
+      /**
+       * @desc 设置为多列选择器
+       */
+      mode: "multiSelector";
+      /**
+       * @desc 需要展示的内容
+       * @desc 默认为 []
+       */
+      range: string[][] | Record<string, any>[][];
+      /**
+       * @desc 当 range 是一个 Object Array 时，通过 range-key 来指定 Object 中 key 的值作为选择器显示内容
+       */
+    rangeKey: string;
+      /**
+       * @desc 当前每列选择的下标
+       * @desc 默认为列数个 0 组成的数组
+       */
+      value: number[];
+      /**
+       * @desc 是否禁用
+       * @desc 默认为 false
+       */
+      disabled: boolean;
+      /**
+       * @desc value 改变时触发
+       */
+      onChange: (event: TPickerMultiSelectorChangeEvent) => void;
+      /**
+       * @desc 某一列 value 改变时触发
+       */
+      onColumnchange: (event: TPickerMultiSelectorColumnchangeEvent) => void;
+      /**
+       * @desc 取消选择时触发
+       */
+      onCancel: (event: TEvent) => void;
+    }
+  | {
+      /**
+       * @desc 在 form 中作为 key
+       */
+      name: string;
+      /**
+       * @desc 设置为时间选择器
+       */
+      mode: "time";
+      /**
+       * @desc 选中的日期
+       * @desc 格式为 hh:mm
+       */
+      value: string;
+      /**
+       * @desc 有效日期范围的开始
+       * @desc 格式为 hh:mm
+       */
+      start: string;
+      /**
+       * @desc 有效日期范围的结束
+       * @desc 格式为 hh:mm
+       */
+      end: string;
+      /**
+       * @desc 是否禁用
+       * @desc 默认为 false
+       */
+      disabled: boolean;
+      /**
+       * @desc value 改变时触发
+       */
+      onChange: (event: TPickerTimeChangeEvent) => void;
+      /**
+       * @desc 取消选择时触发
+       */
+      onCancel: (event: TEvent) => void;
+    }
+  | {
+      /**
+       * @desc 在 form 中作为 key
+       */
+      name: string;
+      /**
+       * @desc 设置为日期选择器
+       */
+      mode: "date";
+      /**
+       * @desc 选中的日期
+       * @desc 格式为 YYYY-MM-DD
+       */
+      value: string;
+      /**
+       * @desc 有效日期范围的开始
+       * @desc 格式为 YYYY-MM-DD
+       */
     start: string;
-    /** mode为time：表示有效时间范围的结束，字符串格式为"hh:mm"；mode为date：表示有效日期范围的结束，字符串格式为"YYYY-MM-DD" */
+      /**
+       * @desc 有效日期范围的结束
+       * @desc 格式为 YYYY-MM-DD
+       */
     end: string;
-    /** 有效值 year,month,day，表示选择器的粒度 */
+      /**
+       * @desc 选择器的粒度
+       * @desc 默认为 day
+       */
     fields: "year" | "month" | "day";
-    /** 可为每一列的顶部添加一个自定义的项 */
+      /**
+       * @desc 是否禁用
+       * @desc 默认为 false
+       */
+      disabled: boolean;
+      /**
+       * @desc value 改变时触发
+       */
+      onChange: (event: TPickerDateChangeEvent) => void;
+      /**
+       * @desc 取消选择时触发
+       */
+      onCancel: (event: TEvent) => void;
+    }
+  | {
+      /**
+       * @desc 在 form 中作为 key
+       */
+      name: string;
+      /**
+       * @desc 设置为省市区选择器
+       */
+      mode: "region";
+      /**
+       * @desc 选中的省市区
+       * @desc 默认选中每一列第一个值
+       */
+      value: string[];
+      /**
+       * @desc 可为每一列的顶部添加一个自定义的项
+       */
     customItem: string;
+      /**
+       * @desc 是否禁用
+       * @desc 默认为 false
+       */
+      disabled: boolean;
+      /**
+       * @desc value 改变时触发
+       */
+      onChange: (event: TPickerRegionChangeEvent) => void;
+      /**
+       * @desc 取消选择时触发
+       */
+      onCancel: (event: TEvent) => void;
   },
   {}
 >;
