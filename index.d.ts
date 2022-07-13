@@ -9,8 +9,26 @@ import type {
   ExtractPropTypes,
   EmitsOptions,
 } from "vue3";
-type PublicProps = VNodeProps & AllowedComponentProps & ComponentCustomProps;
 
+type PublicProps = VNodeProps & AllowedComponentProps & ComponentCustomProps;
+type TComponent<
+  P extends Record<string, any>,
+  E extends EmitsOptions
+> = DefineComponent<
+  {},
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  E,
+  string,
+  PublicProps,
+  Readonly<ExtractPropTypes<P>>
+>;
+
+/* ---- 事件对象 ---- */
 /**
  * @desc 基础事件对象属性列表
  */
@@ -54,17 +72,15 @@ type TBaseEvent = {
    */
   mark?: Record<string, any>;
 };
-
 /**
  * @desc 自定义事件对象属性列表
  */
-type TCustomerEvent = TBaseEvent & {
+type TCustomEvent = TBaseEvent & {
   /**
    * @desc 额外的信息
    */
   detail: Record<string, any>;
 };
-
 /**
  * @desc 触摸事件对象属性列表
  */
@@ -136,24 +152,18 @@ type TTouchEvent = TBaseEvent & {
     y: number;
   }[];
 };
+type TScrollViewCustomEvent = TBaseEvent & {
+  detail: {
+    scrollLeft: number;
+    scrollTop: number;
+    scrollHeight: number;
+    scrollWidth: number;
+    deltaX: number;
+    deltaY: number;
+  };
+};
 
-type TComponent<
-  P extends Record<string, any>,
-  E extends EmitsOptions
-> = DefineComponent<
-  {},
-  {},
-  {},
-  ComputedOptions,
-  MethodOptions,
-  ComponentOptionsMixin,
-  ComponentOptionsMixin,
-  E,
-  string,
-  PublicProps,
-  Readonly<ExtractPropTypes<P>>
->;
-
+/* ---- 元素 ---- */
 /**
  * @desc 包装元素，不会在页面中做任何渲染，只接受控制属性
  * @desc 支持在 template 模板中嵌套 template 和 block
@@ -316,48 +326,36 @@ type TScrollView = TComponent<
      * @desc 默认为 false
      */
     fastDeceleration: boolean;
-  },
-  {
     /**
      * @desc 滚动到顶部/左边时触发
      */
-    scrolltoupper: (event: TBaseEvent) => void;
+    onScrolltoupper: (event: TBaseEvent) => void;
     /**
      * @desc 滚动到底部/右边时触发
      */
-    scrolltolower: (event: TBaseEvent) => void;
+    onScrolltolower: (event: TBaseEvent) => void;
     /**
      * @desc 滚动时触发
      */
-    scroll: (
-      event: TCustomerEvent & {
-        detail: {
-          scrollLeft: number;
-          scrollTop: number;
-          scrollHeight: number;
-          scrollWidth: number;
-          deltaX: number;
-          deltaY: number;
-        };
-      }
-    ) => void;
+    onScroll: (event: TScrollViewCustomEvent) => void;
     /**
      * @desc 自定义下拉刷新控件被下拉时触发
      */
-    refresherpulling: (event: TBaseEvent) => void;
+    onRefresherpulling: (event: TBaseEvent) => void;
     /**
      * @desc 自定义下拉刷新被触发时触发
      */
-    refresherrefresh: (event: TBaseEvent) => void;
+    onRefresherrefresh: (event: TBaseEvent) => void;
     /**
      * @desc 自定义下拉刷新被复位时触发
      */
-    refresherrestore: (event: TBaseEvent) => void;
+    onRefresherrestore: (event: TBaseEvent) => void;
     /**
      * @desc 自定义下拉刷新被中止时触发
      */
-    refresherabort: (event: TBaseEvent) => void;
-  }
+    onRefresherabort: (event: TBaseEvent) => void;
+  },
+  {}
 >;
 
 /** media query 匹配检测节点 */
@@ -1305,7 +1303,7 @@ type TUnicloudDb = TComponent<
   {}
 >;
 
-declare module "vue" {
+declare module "@vue/runtime-core" {
   export interface GlobalComponents {
     Block: TBlock;
     View: TView;
