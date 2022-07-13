@@ -11,6 +11,132 @@ import type {
 } from "vue3";
 type PublicProps = VNodeProps & AllowedComponentProps & ComponentCustomProps;
 
+/**
+ * @desc 基础事件对象属性列表
+ */
+type TBaseEvent = {
+  /**
+   * @desc 事件类型
+   */
+  type: string;
+  /**
+   * @desc 事件生成时的时间戳
+   */
+  timeStamp: number;
+  /**
+   * @desc 触发事件的组件的一些属性值集合
+   */
+  target: {
+    /**
+     * @desc 事件源组件的id
+     */
+    id: string;
+    /**
+     * @desc 事件源组件上由 data- 开头的自定义属性组成的集合
+     */
+    dataset: Record<string, any>;
+  };
+  /**
+   * @desc 当前组件的一些属性值集合
+   */
+  currentTarget?: {
+    /**
+     * @desc 当前组件的id
+     */
+    id: string;
+    /**
+     * @desc 当前组件上由data-开头的自定义属性组成的集合
+     */
+    dataset: Record<string, any>;
+  };
+  /**
+   * @desc 事件标记数据
+   */
+  mark?: Record<string, any>;
+};
+
+/**
+ * @desc 自定义事件对象属性列表
+ */
+type TCustomerEvent = TBaseEvent & {
+  /**
+   * @desc 额外的信息
+   */
+  detail: Record<string, any>;
+};
+
+/**
+ * @desc 触摸事件对象属性列表
+ */
+type TTouchEvent = TBaseEvent & {
+  /**
+   * @desc 触摸事件，当前停留在屏幕中的触摸点信息的数组
+   */
+  touches: {
+    /**
+     * @desc 触摸点的标识符
+     */
+    identifier: number;
+    /**
+     * @desc 距离文档左上角的距离，文档的左上角为原点，横向为 X 轴，纵向为 Y 轴
+     */
+    pageX: number;
+    /**
+     * @desc 距离文档左上角的距离，文档的左上角为原点，横向为 X 轴，纵向为 Y 轴
+     */
+    pageY: number;
+    /**
+     * @desc 距离页面可显示区域（屏幕除去导航条）左上角距离，横向为 X 轴，纵向为 Y 轴
+     */
+    clientX: number;
+    /**
+     * @desc 距离页面可显示区域（屏幕除去导航条）左上角距离，横向为 X 轴，纵向为 Y 轴
+     */
+    clientY: number;
+    /**
+     * @desc 距离 Canvas 左上角的距离，Canvas 的左上角为原点 ，横向为 X 轴，纵向为 Y 轴
+     */
+    x: number;
+    /**
+     * @desc 距离 Canvas 左上角的距离，Canvas 的左上角为原点，横向为 X 轴，纵向为 Y 轴
+     */
+    y: number;
+  }[];
+  /**
+   * @desc 触摸事件，当前变化的触摸点信息的数组
+   */
+  changedTouches: {
+    /**
+     * @desc 触摸点的标识符
+     */
+    identifier: number;
+    /**
+     * @desc 距离文档左上角的距离，文档的左上角为原点，横向为 X 轴，纵向为 Y 轴
+     */
+    pageX: number;
+    /**
+     * @desc 距离文档左上角的距离，文档的左上角为原点，横向为 X 轴，纵向为 Y 轴
+     */
+    pageY: number;
+    /**
+     * @desc 距离页面可显示区域（屏幕除去导航条）左上角距离，横向为 X 轴，纵向为 Y 轴
+     */
+    clientX: number;
+    /**
+     * @desc 距离页面可显示区域（屏幕除去导航条）左上角距离，横向为 X 轴，纵向为 Y 轴
+     */
+    clientY: number;
+    /**
+     * @desc 距离 Canvas 左上角的距离，Canvas 的左上角为原点 ，横向为 X 轴，纵向为 Y 轴
+     */
+    x: number;
+    /**
+     * @desc 距离 Canvas 左上角的距离，Canvas 的左上角为原点，横向为 X 轴，纵向为 Y 轴
+     */
+    y: number;
+  }[];
+};
+
 type TComponent<
   P extends Record<string, any>,
   E extends EmitsOptions
