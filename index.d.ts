@@ -563,7 +563,6 @@ type TMatchMedia = TComponent<
  * @desc 可拖动区域
  * @desc 在其中内嵌 movable-view 组件用于指示可拖动的区域
  * @desc 即手指/鼠标按住 movable-view 拖动或双指缩放，但拖不出 movable-area 规定的范围
- * @desc 必须设置 width 和 height 属性，不设置默认为 10px
  */
 type TMovableArea = TComponent<
   {
@@ -576,35 +575,111 @@ type TMovableArea = TComponent<
   {}
 >;
 
-/** 可移动的视图容器，在页面中可以拖拽滑动 */
+/**
+ * @desc movable-view change 事件对象
+ */
+type TMovableViewChangeEvent = TBaseEvent & {
+  detail: {
+    x: number;
+    y: number;
+    source: "touch" | "touch-out-of-bounds" | "out-of-bounds" | "friction" | "";
+  };
+};
+/**
+ * @desc movable-view scale 事件对象
+ */
+type TMovableViewScaleEvent = TBaseEvent & {
+  detail: {
+    x: number;
+    y: number;
+    scale: boolean;
+  };
+};
+/**
+ * @desc 可移动的视图容器，在页面中可以拖拽滑动或双指缩放
+ * @desc movable-area 直接子组件
+ */
 type TMovableView = TComponent<
   {
-    /** movable-view 的移动方向。 */
+    /**
+     * @desc movable-view 的移动方向
+     * @desc 默认为 none
+     */
     direction: "all" | "vertical" | "horizontal" | "none";
-    /** movable-view 是否带有惯性。 */
+    /**
+     * @desc 是否带有惯性
+     * @desc 默认为 false
+     */
     inertia: boolean;
-    /** 超过可移动区域后，movable-view 是否还可以移动。 */
+    /**
+     * @desc 超过可移动区域后，是否还可以移动
+     * @desc 默认为 false
+     */
     outOfBounds: boolean;
-    /** 定义 x 轴方向的偏移，如果 x 的值不在可移动范围内，会自动移动到可移动范围；改变 x 的值会触发动画。 */
+    /**
+     * @desc 定义 x 轴方向的偏移
+     * @desc 如果 x 的值不在可移动范围内，会自动移动到可移动范围
+     * @desc 改变 x 的值会触发动画
+     */
     x: string | number;
-    /** 定义 y 轴方向的偏移，如果 y 的值不在可移动范围内，会自动移动到可移动范围；改变 y 的值会触发动画。 */
+    /**
+     * @desc 定义 y 轴方向的偏移
+     * @desc 如果 y 的值不在可移动范围内，会自动移动到可移动范围
+     * @desc 改变 y 的值会触发动画
+     */
     y: string | number;
-    /** 阻尼系数，用于控制 x 或 y 改变时的动画和过界回弹的动画，值越大移动越快。 */
+    /**
+     * @desc 阻尼系数，用于控制 x 或 y 改变时的动画和过界回弹的动画
+     * @desc 值越大移动越快
+     * @desc 默认为 20
+     */
     damping: number;
-    /** 摩擦系数，用于控制惯性滑动的动画，值越大摩擦力越大，滑动越快停止；必须大于0，否则会被设置成默认值 2。 */
+    /**
+     * @desc 摩擦系数，用于控制惯性滑动的动画
+     * @desc 值越大摩擦力越大，滑动越快停止
+     * @desc 必须大于 0，否则会被设置成默认值
+     * @desc 默认为 2
+     */
     friction: number;
-    /** 是否禁用。 */
+    /**
+     * @desc 是否禁用
+     * @desc 默认为 false
+     */
     disabled: boolean;
-    /** 是否支持双指缩放，默认缩放手势生效区域是在 movable-view 内。 */
+    /**
+     * @desc 是否支持双指缩放
+     * @desc 默认缩放手势生效区域是在 movable-view 内
+     * @desc 默认为 false
+     */
     scale: boolean;
-    /** 定义缩放倍数最小值，默认为 0.5。 */
+    /**
+     * @desc 定义缩放倍数最小值
+     * @desc 默认为 0.5
+     */
     scaleMin: number;
-    /** 定义缩放倍数最大值，默认为 10。 */
+    /**
+     * @desc 定义缩放倍数最大值
+     * @desc 默认为 10
+     */
     scaleMax: number;
-    /** 定义缩放倍数，取值范围为 0.5 - 10 */
+    /**
+     * @desc 定义缩放倍数，取值范围为 0.5 - 10
+     * @desc 默认为 1
+     */
     scaleValue: number;
-    /** 是否使用动画，默认为 true。 */
+    /**
+     * @desc 是否使用动画
+     * @desc 默认为 true
+     */
     animation: boolean;
+    /**
+     * @desc 拖动过程中触发
+     */
+    onChange: (event: TMovableViewChangeEvent) => void;
+    /**
+     * @desc 缩放过程中触发
+     */
+    onScale: (event: TMovableViewScaleEvent) => void;
   },
   {}
 >;
