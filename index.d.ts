@@ -31,7 +31,7 @@ type TComponent<
 /* ---- 通用事件对象 ---- */
 
 /**
- * @desc 基础事件对象
+ * @desc 通用事件对象
  */
 type TBaseEvent = {
   /**
@@ -72,26 +72,10 @@ type TBaseEvent = {
    * @desc 事件标记数据
    */
   mark?: Record<string, any>;
-};
-
-/**
- * @desc 自定义事件对象
- */
-type TCustomEvent = TBaseEvent & {
-  /**
-   * @desc 额外的信息
-   */
-  detail: Record<string, any>;
-};
-
-/**
- * @desc 触摸事件对象
- */
-type TTouchEvent = TBaseEvent & {
   /**
    * @desc 触摸事件，当前停留在屏幕中的触摸点信息的数组
    */
-  touches: {
+  touches?: {
     /**
      * @desc 触摸点的标识符
      */
@@ -124,7 +108,7 @@ type TTouchEvent = TBaseEvent & {
   /**
    * @desc 触摸事件，当前变化的触摸点信息的数组
    */
-  changedTouches: {
+  changedTouches?: {
     /**
      * @desc 触摸点的标识符
      */
@@ -154,6 +138,11 @@ type TTouchEvent = TBaseEvent & {
      */
     y: number;
   }[];
+  /**
+   * @desc 额外的信息
+   */
+  detail?: Record<string, any>;
+  [key: string]: any;
 };
 
 /* ---- 元素和对应事件对象 ---- */
