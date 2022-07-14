@@ -1369,6 +1369,11 @@ type TInput = TComponent<
      */
     focus: boolean;
     /**
+     * @desc 是否自动聚焦，拉起键盘
+     * @desc 默认为 false
+     */
+    autoFocus: boolean;
+    /**
      * @desc 设置键盘右下角按钮的文字
      * @desc type="text" 时生效
      */
@@ -1586,7 +1591,7 @@ type TPicker = TComponent<
        * @desc 是否禁用
        * @desc 默认为 false
        */
-    disabled: boolean;
+      disabled: boolean;
       /**
        * @desc value 改变时触发
        */
@@ -1613,7 +1618,7 @@ type TPicker = TComponent<
       /**
        * @desc 当 range 是一个 Object Array 时，通过 range-key 来指定 Object 中 key 的值作为选择器显示内容
        */
-    rangeKey: string;
+      rangeKey: string;
       /**
        * @desc 当前每列选择的下标
        * @desc 默认为列数个 0 组成的数组
@@ -1693,17 +1698,17 @@ type TPicker = TComponent<
        * @desc 有效日期范围的开始
        * @desc 格式为 YYYY-MM-DD
        */
-    start: string;
+      start: string;
       /**
        * @desc 有效日期范围的结束
        * @desc 格式为 YYYY-MM-DD
        */
-    end: string;
+      end: string;
       /**
        * @desc 选择器的粒度
        * @desc 默认为 day
        */
-    fields: "year" | "month" | "day";
+      fields: "year" | "month" | "day";
       /**
        * @desc 是否禁用
        * @desc 默认为 false
@@ -1735,7 +1740,7 @@ type TPicker = TComponent<
       /**
        * @desc 可为每一列的顶部添加一个自定义的项
        */
-    customItem: string;
+      customItem: string;
       /**
        * @desc 是否禁用
        * @desc 默认为 false
@@ -1749,7 +1754,7 @@ type TPicker = TComponent<
        * @desc 取消选择时触发
        */
       onCancel: (event: TEvent) => void;
-  },
+    },
   {}
 >;
 
@@ -2000,41 +2005,199 @@ type TSwitch = TComponent<
   {}
 >;
 
-/** 多行输入框 */
+/**
+ * @desc textarea focus 事件对象
+ */
+type TTextareaFocusEvent = TEvent & {
+  detail: {
+    value: string;
+    height: number;
+  };
+};
+/**
+ * @desc textarea blur 事件对象
+ */
+type TTextareaBlurEvent = TEvent & {
+  detail: {
+    value: string;
+    cursor: number;
+  };
+};
+/**
+ * @desc textarea linechange 事件对象
+ */
+type TTextareaLinechangeEvent = TEvent & {
+  detail: {
+    height: number;
+    heightRpx: number;
+    lineCount: number;
+  };
+};
+/**
+ * @desc textarea input 事件对象
+ */
+type TTextareaInputEvent = TEvent & {
+  detail: {
+    value: string;
+    cursor: number;
+  };
+};
+/**
+ * @desc textarea confirm 事件对象
+ */
+type TTextareaConfirmEvent = TEvent & {
+  detail: {
+    value: string;
+  };
+};
+/**
+ * @desc textarea keyboardheightchange 事件对象
+ */
+type TTextareaKeyboardheightchangeEvent = TEvent & {
+  detail: {
+    height: number;
+    duration: number;
+  };
+};
+/**
+ * @desc 多行输入框
+ */
 type TTextarea = TComponent<
   {
-    /** radio当前取值 */
-    value: number;
-    /** 提示信息。 */
+    /**
+     * @desc 输入框的内容
+     */
+    value: string;
+    /**
+     * @desc 输入框为空时占位符
+     */
     placeholder: string;
-    /** 指定 placeholder 的样式 */
+    /**
+     * @desc 指定 placeholder 的样式
+     */
     placeholderStyle: string;
-    /** 指定 placeholder 的样式类 */
+    /**
+     * @desc 指定 placeholder 的样式类
+     * @desc 默认为 textarea-placeholder
+     */
     placeholderClass: string;
-    /** 最大输入长度，设置为 -1 的时候不限制最大长度 */
+    /**
+     * @desc 是否禁用
+     * @desc 默认为 false
+     */
+    disabled: boolean;
+    /**
+     * @desc 最大输入长度，设置为 -1 的时候不限制最大长度
+     * @desc 默认为 140
+     */
     maxlength: number;
-    /** 获取焦点 */
-    autoFocus: boolean;
-    /** 获取焦点 */
+    /**
+     * @desc 是否获取焦点
+     * @desc 默认为 false
+     */
     focus: boolean;
-    /** 指定focus时的光标位置 */
-    cursor: number;
-    /** 设置键盘右下角按钮的文字 */
-    confirmType: "send" | "search" | "next" | "go" | "done";
-    /** 是否自动增高，设置auto-height时，style.height不生效 */
+    /**
+     * @desc 是否自动聚焦，拉起键盘
+     * @desc 默认为 false
+     */
+    autoFocus: boolean;
+    /**
+     * @desc 是否自动增高
+     * @desc 设置时，样式里的 height 不生效
+     * @desc 默认为 false
+     */
     autoHeight: boolean;
-    /** 如果 textarea 是在一个 position:fixed 的区域，需要显示指定属性 fixed 为 true */
+    /**
+     * @desc 如果 textarea 在 position: fixed 的区域内，需要指定为 true
+     * @desc 默认为 false
+     */
     fixed: boolean;
-    /** 指定光标与键盘的距离，单位 px 。取 textarea 距离底部的距离和 cursor-spacing 指定的距离的最小值作为光标与键盘的距离 */
+    /**
+     * @desc 指定光标与键盘的距离
+     * @desc 取 textarea 距离底部的距离和 cursor-spacing 指定的距离的最小值作为光标与键盘的距离
+     * @desc 单位为 px
+     * @desc 默认为 0
+     */
     cursorSpacing: number;
-    /** 是否显示键盘上方带有”完成“按钮那一栏 */
+    /**
+     * @desc 指定 focus 时的光标位置
+     */
+    cursor: number;
+    /**
+     * @desc 设置键盘右下角按钮的文字
+     * @desc 默认为 done
+     */
+    confirmType: "send" | "search" | "next" | "go" | "done";
+    /**
+     * @desc 点击键盘右下角按钮时是否保持键盘不收起
+     * @desc 默认为 false
+     */
+    confirmHold: boolean;
+    /**
+     * @desc 是否显示键盘上方带有”完成“按钮那一栏
+     * @desc 默认为 true
+     */
     showConfirmBar: boolean;
-    /**  光标起始位置，自动聚集时有效，需与selection-end搭配使用 */
+    /**
+     * @desc 光标起始位置，自动聚焦时有效，需与 selection-end 搭配使用
+     * @desc 默认为 -1
+     */
     selectionStart: number;
-    /**  光标结束位置，自动聚集时有效，需与selection-satrt搭配使用 */
+    /**
+     * @desc 光标结束位置，自动聚焦时有效，需与 selection-start 搭配使用
+     * @desc 默认为 -1
+     */
     selectionEnd: number;
-    /** 键盘弹起时，是否自动上推页面 */
+    /**
+     * @desc 键盘弹起时，是否自动上推页面
+     * @desc 默认为 true
+     */
     adjustPosition: boolean;
+    /**
+     * @desc 是否去掉 iOS 下的默认内边距
+     * @desc 默认为 false
+     */
+    disableDefaultPadding: boolean;
+    /**
+     * @desc 聚焦时点击页面的时候是否不收起键盘
+     * @desc 默认为 false
+     */
+    holdKeyboard: boolean;
+    /**
+     * @desc 键盘收起时是否自动失焦
+     * @desc 默认为 false
+     */
+    autoBlur: boolean;
+    /**
+     * @desc 是否忽略组件内对文本合成系统事件的处理
+     * @desc 为 false 时将触发 compositionstart、compositionend、compositionupdate 事件，且在文本合成期间会触发 input 事件
+     * @desc 默认为 true
+     */
+    ignoreCompositionEvent: boolean;
+    /**
+     * @desc 聚焦时触发
+     */
+    onFocus: (event: TTextareaFocusEvent) => void;
+    /**
+     * @desc 失焦时触发
+     */
+    onBlur: (event: TTextareaBlurEvent) => void;
+    /**
+     * @desc 输入框行数变化时触发
+     */
+    onLinechange: (event: TTextareaLinechangeEvent) => void;
+    /**
+     * @desc 输入时触发
+     */
+    onInput: (event: TTextareaInputEvent) => string | void;
+    /**
+     * @desc 点击完成按钮时触发
+     */
+    onConfirm: (event: TTextareaConfirmEvent) => void;
+    /**
+     * @desc 键盘高度变化时触发
+     */
+    onKeyboardheightchange: (event: TTextareaKeyboardheightchangeEvent) => void;
   },
   {}
 >;
