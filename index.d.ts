@@ -1375,7 +1375,7 @@ type TInput = TComponent<
     autoFocus: boolean;
     /**
      * @desc 设置键盘右下角按钮的文字
-     * @desc type="text" 时生效
+     * @desc type="text" 时有效
      */
     confirmType: "send" | "search" | "next" | "go" | "done";
     /**
@@ -2450,7 +2450,7 @@ type TCamera = TComponent<
     onInitdone: (event: TCameraInitdoneEvent) => void;
     /**
      * @desc 扫码识别成功时触发
-     * @desc mode="scanCode" 时生效
+     * @desc mode="scanCode" 时有效
      */
     onScancode: (event: TEvent) => void;
   },
@@ -3862,12 +3862,28 @@ type TUnicloudDb = TComponent<
 /** 用于展示微信开放的数据 */
 type TOpenData = TComponent<
   {
-    /** 开放数据类型 */
-    type: string;
-    /** 当 type="groupName" 时生效, 群id */
+    /**
+     * @desc 开放数据类型
+     */
+    type:
+      | "userNickName"
+      | "userAvatarUrl"
+      | "userGender"
+      | "groupName"
+      | "userCity"
+      | "userProvince"
+      | "userCountry"
+      | "userLanguage";
+    /**
+     * @desc 群 ID
+     * @desc type="groupName" 时有效
+     */
     openGid: string;
-    /**  */
-    lang: "ts";
+    /**
+     * @desc 以什么预压展示 userInfo
+     * @desc type="user*" 时有效
+     */
+    lang: "en" | "zh_CN" | "zh_TW";
   },
   {}
 >;
