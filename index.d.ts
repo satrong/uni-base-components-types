@@ -3464,13 +3464,61 @@ type TMap = TComponent<
   {}
 >;
 
-/** 画布 */
+/**
+ * @desc canvas error 事件对象
+ */
+type TCanvasErrorEvent = TEvent & {
+  detail: {
+    errMsg: string;
+  };
+};
+/**
+ * @desc 画布
+ */
 type TCanvas = TComponent<
   {
-    /** canvas 组件的唯一标识符 */
+    /**
+     * @desc canvas 类型
+     */
+    type: "2d" | "webgl";
+    /**
+     * @desc 唯一标识符
+     */
     canvasId: string;
-    /** 当在 canvas 中移动时且有绑定手势事件时，禁止屏幕滚动以及下拉刷新 */
+    /**
+     * @desc 当在 canvas 中移动时且有绑定手势事件时，是否禁止屏幕滚动以及下拉刷新
+     * @desc 默认为 false
+     */
     disableScroll: boolean;
+    /**
+     * @desc 是否启用高清处理
+     * @desc 默认为 true
+     */
+    hidpi: boolean;
+    /**
+     * @desc 手指触摸动作开始时触发
+     */
+    onTouchstart: (event: TEvent) => void;
+    /**
+     * @desc 手指触摸后移动时触发
+     */
+    onTouchmove: (event: TEvent) => void;
+    /**
+     * @desc 手指触摸动作结束时触发
+     */
+    onTouchend: (event: TEvent) => void;
+    /**
+     * @desc 手指触摸动作被打断时触发
+     */
+    onTouchcancel: (event: TEvent) => void;
+    /**
+     * @desc 手指长按 500ms 之后触发，触发了长按事件后进行移动不会触发屏幕的滚动
+     */
+    onLongtap: (event: TEvent) => void;
+    /**
+     * @desc 发生错误时触发
+     */
+    onError: (event: TCanvasErrorEvent) => void;
   },
   {}
 >;
