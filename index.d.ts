@@ -3859,6 +3859,87 @@ type TUnicloudDb = TComponent<
   {}
 >;
 
+/**
+ * @desc page-meta resize 事件对象
+ */
+type TPageMetaResizeEvent = TEvent & {
+  detail: {
+    size: {
+      windowWidth: number;
+      windowHeight: number;
+    };
+  };
+};
+/**
+ * @desc page-meta scroll 事件对象
+ */
+type TPageMetaScrollEvent = TEvent & {
+  detail: {
+    scrollTop: number;
+  };
+};
+/**
+ * @desc 页面属性配置节点，用于指定页面的一些属性、监听页面事件
+ * @desc 可部分替代 pages.json
+ * @desc 只能是页面内的第一个节点
+ */
+type TPageMeta = TComponent<
+  {
+    /**
+     * @desc 下拉背景字体、loading 图的样式
+     */
+    backgroundTextStyle: "dark" | "light";
+    /**
+     * @desc 窗口的背景色
+     */
+    backgroundColor: string;
+    /**
+     * @desc 顶部窗口的背景色，必须为十六进制颜色值，仅 iOS 支持
+     */
+    backgroundColorTop: string;
+    /**
+     * @desc 底部窗口的背景色，必须为十六进制颜色值，仅 iOS 支持
+     */
+    backgroundColorBottom: string;
+    /**
+     * @desc 滚动位置，在被设置时页面会滚动到对应位置
+     * @desc 单位为 px / rpx
+     */
+    scrollTop: string;
+    /**
+     * @desc 滚动动画时长
+     * @desc 默认为 300
+     */
+    scrollDuration: number;
+    /**
+     * @desc 页面根节点样式
+     * @desc 页面根节点是所有页面节点的祖先节点，相当于 HTML 中的 body 节点
+     */
+    pageStyle: string;
+    /**
+     * @desc 页面的根字体大小
+     */
+    rootFontSize: string;
+    /**
+     * @desc 是否开启自动下拉刷新
+     * @desc 默认为 false
+     */
+    enablePullDownRefresh: boolean;
+    /**
+     * @desc 页面尺寸变化时触发
+     */
+    onResize: (event: TPageMetaResizeEvent) => void;
+    /**
+     * @desc 页面滚动时触发
+     */
+    onScroll: (event: TPageMetaScrollEvent) => void;
+    /**
+     * @desc 通过改变 scroll-top 属性来使页面滚动，页面滚动结束后触发
+     */
+    onScrolldone: (event: TEvent) => void;
+  },
+  {}
+>;
 /** 用于展示微信开放的数据 */
 type TOpenData = TComponent<
   {
