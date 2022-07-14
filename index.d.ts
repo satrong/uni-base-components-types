@@ -1,3 +1,6 @@
+// TODO 需要补充 ad 相关组件
+// TODO 需要补充 nvue 组件
+
 import type {
   DefineComponent,
   ComputedOptions,
@@ -4068,13 +4071,6 @@ declare module "@vue/runtime-core" {
     PageMeta: TPageMeta;
     NavigationBar: TNavigationBar;
     CustomTabBar: TCustomTabBar;
-
-    Barcode: TBarcode;
-    List: TList;
-    Cell: TCell;
-    RecycleList: TRecycleList;
-    Waterfall: TWaterfall;
-    Refresh: TRefresh;
 
     OpenData: TOpenData;
   }
