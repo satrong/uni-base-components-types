@@ -2202,60 +2202,117 @@ type TTextarea = TComponent<
   {}
 >;
 
-/** 页面链接 */
+/**
+ * @desc 页面跳转
+ */
 type TNavigator = TComponent<
   {
-    /** 在哪个目标上发生跳转，默认当前应用 */
-    target: string;
-    /** 推流地址。目前仅支持 flv, rtmp 格式 */
+    /**
+     * @desc 应用内的跳转链接
+     * @desc 值为相对路径或绝对路径
+     * @desc 例子：../first/first、/pages/first/first
+     */
     url: string;
-    /** 跳转方式 */
+    /**
+     * @desc 跳转方式
+     */
     openType:
       | "navigate"
       | "redirect"
       | "switchTab"
       | "reLaunch"
-      | "navigateBack";
-    /** 当 open-type 为 navigateBack 时有效，表示回退的层数 */
+      | "navigateBack"
+      | "exit";
+    /**
+     * @desc 回退的层数
+     * @desc open-type="navigateBack" 时有效
+     * @desc 默认为 1
+     */
     delta: number;
-    /** 当target="miniProgram"时有效，要打开的小程序 appId */
-    appId: string;
-    /** 当target="miniProgram"时有效，打开的页面路径，如果为空则打开首页 */
-    path: string;
-    /** 当target="miniProgram"时有效，需要传递给目标应用的数据，目标应用可在 App.onLaunch()，App.onShow() 中获取到这份数据 */
-    extraData: Record<string, any>;
-    /** 当target="miniProgram"时有效，要打开的小程序版本，有效值 develop（开发版），trial（体验版），release（正式版），仅在当前小程序为开发版或体验版时此参数有效；如果当前小程序是体验版或正式版，则打开的小程序必定是正式版 */
-    version: string;
-    /** 当 open-type="navigateTo" 或 open-type="navigateBack" 时有效，窗口的显示/关闭的动画类型。 */
+    /**
+     * @desc 窗口的显示/关闭的动画类型
+     * @desc open-type="navigateTo" 或 open-type="navigateBack" 时有效
+     * @desc 默认为 pop-in 显示、pop-out 关闭
+     */
     animationType:
-      | "auto"
-      | "none"
       | "slide-in-right"
-      | "slide-in-left"
-      | "slide-in-top"
-      | "slide-in-bottom"
-      | "fade-in"
-      | "zoom-out"
-      | "zoom-fade-out"
-      | "pop-in"
       | "slide-out-right"
+      | "slide-in-left"
       | "slide-out-left"
+      | "slide-in-top"
       | "slide-out-top"
+      | "slide-in-bottom"
       | "slide-out-bottom"
+      | "pop-in"
+      | "pop-out"
+      | "fade-in"
       | "fade-out"
       | "zoom-in"
+      | "zoom-out"
       | "zoom-fade-in"
-      | "pop-out";
-    /** 当 open-type="navigateTo" 或 open-type="navigateBack" 时有效，窗口的显示/关闭动画的持续时间。 */
+      | "zoom-fade-out"
+      | "none";
+    /**
+     * @desc 窗口的显示/关闭动画的持续时间
+     * @desc open-type="navigateTo" 或 open-type="navigateBack" 时有效
+     * @desc 默认为 300
+     */
     animationDuration: number;
-    /** 指定按下去的样式类。当 hover-class="none" 时，没有点击态效果 */
+    /**
+     * @desc 指定点击时的样式类
+     * @desc hover-class="none" 时，没有点击态效果
+     * @desc 默认为 navigator-hover
+     */
     hoverClass: string;
-    /** 指定是否阻止本节点的祖先节点出现点击态 */
+    /**
+     * @desc 指定是否阻止本节点的祖先节点出现点击态
+     * @desc 默认为 false
+     */
     hoverStopPropagation: boolean;
-    /** 按住后多久出现点击态，单位为 ms */
+    /**
+     * @desc 按住后多久出现点击态
+     * @desc 单位为 ms
+     * @desc 默认为 50
+     */
     hoverStartTime: number;
-    /** 手指松开后点击态保留时间，单位为 ms */
+    /**
+     * @desc 手指松开后点击态保留时间
+     * @desc 单位为 ms
+     * @desc 默认为 600
+     */
     hoverStayTime: number;
+    /**
+     * @desc 在哪个目标上发生跳转
+     * @desc 默认为 self
+     */
+    target: "self" | "miniProgram";
+    /**
+     * @desc 要打开的小程序 appId
+     * @desc target="miniProgram" 时有效
+     */
+    appId: string;
+    /**
+     * @desc 打开的页面路径，如果为空则打开首页
+     * @desc target="miniProgram" 时有效
+     */
+    path: string;
+    /**
+     * @desc 需要传递给目标应用的数据
+     * @desc target="miniProgram" 时有效
+     */
+    extraData: Record<string, any>;
+    /**
+     * @desc 要打开的小程序版本
+     * @desc 如果当前小程序是正式版，则打开的小程序必定是正式版
+     * @desc target="miniProgram" 时有效
+     * @desc 默认为 release
+     */
+    version: "develop" | "trial" | "release";
+    /**
+     * @desc 当传递该参数后，可以不传 app-id 和 path
+     * @desc target="miniProgram" 时有效
+     */
+    shortLink: string;
   },
   {}
 >;
