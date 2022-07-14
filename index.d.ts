@@ -3664,83 +3664,6 @@ type TAd = TComponent<
   {}
 >;
 
-/** 页面导航条配置节点 */
-type TNavigationBar = TComponent<
-  {
-    /** 视频的标题，全屏时在顶部展示 */
-    title: string;
-    /** 标题icon */
-    titleIcon: boolean;
-    /** 标题icon圆角 */
-    titleIconRadius: boolean;
-    /**  */
-    subtitleText: boolean;
-    /**  */
-    subtitleSize: boolean;
-    /**  */
-    subtitleColor: boolean;
-    /**  */
-    subtitleOverflow: boolean;
-    /**  */
-    titleAlign: boolean;
-    /**  */
-    backgroundImage: boolean;
-    /**  */
-    backgroundRepeat: boolean;
-    /**  */
-    blurEffect: boolean;
-    /** 是否在导航条显示 loading 加载提示 */
-    loading: boolean;
-    /** 导航条前景颜色值，包括按钮、标题、状态栏的颜色，仅支持 #ffffff 和 #000000 */
-    frontColor: boolean;
-    /** 窗口的背景色，必须为十六进制颜色值 */
-    backgroundColor: string;
-    /** 改变导航栏颜色时的动画时长，默认为 0 （即没有动画效果） */
-    colorAnimationDuration: boolean;
-    /** 改变导航栏颜色时的动画方式，支持 linear 、 easeIn 、 easeOut 和 easeInOut */
-    colorAnimationTimingFunc: boolean;
-  },
-  {}
->;
-
-/** 自定义tabBar */
-type TCustomTabBar = TComponent<
-  {
-    /** movable-view 的移动方向。 */
-    direction: "all" | "vertical" | "horizontal" | "none";
-    /** 是否显示icon */
-    showIcon: boolean;
-    /** 选中的tabBar选项索引值 */
-    selected: number;
-  },
-  {}
->;
-
-/** 自定义tabBar */
-type TPageMeta = TComponent<
-  {
-    /** 下拉背景字体、loading 图的样式，仅支持 dark 和 light */
-    backgroundTextStyle: string;
-    /** 窗口的背景色，必须为十六进制颜色值 */
-    backgroundColor: string;
-    /** 顶部窗口的背景色，必须为十六进制颜色值，仅 iOS 支持 */
-    backgroundColorTop: string;
-    /** 底部窗口的背景色，必须为十六进制颜色值，仅 iOS 支持 */
-    backgroundColorBottom: string;
-    /** 滚动位置，可以使用 px 或者 rpx 为单位，在被设置时，页面会滚动到对应位置 */
-    scrollTop: string;
-    /** 滚动动画时长 */
-    scrollDuration: number;
-    /** 页面根节点样式，页面根节点是所有页面节点的祖先节点，相当于 HTML 中的 body 节点 */
-    pageStyle: string;
-    /** 页面的根字体大小，页面中的所有 rem 单位，将使用这个字体大小作为参考值，即 1rem 等于这个字体大小 */
-    rootFontSize: string;
-    /**  */
-    enablePullDownRefresh: boolean;
-  },
-  {}
->;
-
 /**
  * @desc 数据库查询组件，对 uni-clientdb 的 js 库的再封装
  */
@@ -3940,6 +3863,97 @@ type TPageMeta = TComponent<
   },
   {}
 >;
+
+/**
+ * @desc 页面导航条配置节点，用于指定导航栏的一些属性
+ * @desc 只能是 page-meta 组件内的第一个节点，需要配合它一同使用
+ */
+type TNavigationBar = TComponent<
+  {
+    /**
+     * @desc 导航条标题
+     */
+    title: string;
+    /**
+     * @desc 标题图标
+     * @desc 仅支持本地文件路径、相对路径
+     * @desc 固定宽高 34px
+     * @desc 设置后标题将居左显示
+     */
+    titleIcon: string;
+    /**
+     * @desc 标题图标圆角
+     * @desc 单位为 px
+     */
+    titleIconRadius: string;
+    /**
+     * @desc 副标题文字内容
+     * @desc 设置副标题后将显示两行标题，副标题在主标题下方
+     * @desc 设置副标题后将居左显示
+     */
+    subtitleText: string;
+    /**
+     * @desc 副标题文字字体大小
+     * @desc 单位为 px
+     * @desc 默认为 12px
+     */
+    subtitleSize: string;
+    /**
+     * @desc 副标题文字颜色
+     * @desc 默认为主标题文字颜色
+     */
+    subtitleColor: string;
+    /**
+     * @desc 副标题文字超出显示区域时处理方式
+     * @desc 默认为 ellipsis
+     */
+    subtitleOverflow: "clip" | "ellipsis";
+    /**
+     * @desc 标题对齐方式
+     * @desc 默认 Android left，iOS center
+     */
+    titleAlign: "center" | "left" | "auto";
+    /**
+     * @desc 背景图片
+     * @desc 支持本地文件路径、相对路径、渐变色
+     */
+    backgroundImage: string;
+    /**
+     * @desc 背景图片重复方式
+     * @desc backgroundImage 设置为图片路径时有效
+     * @desc 默认为 no-repeat
+     */
+    backgroundRepeat: "repeat" | "repeat-x" | "repeat-y" | "no-repeat";
+    /**
+     * @desc 高斯模糊标题栏的风格
+     */
+    blurEffect: "none" | "dark" | "extralight" | "light";
+    /**
+     * @desc 是否在导航条显示 loading 加载提示
+     * @desc 默认为 false
+     */
+    loading: boolean;
+    /**
+     * @desc 导航条前景颜色值，包括按钮、标题、状态栏的颜色
+     */
+    frontColor: "#ffffff" | "#000000";
+    /**
+     * @desc 导航条背景颜色值
+     */
+    backgroundColor: string;
+    /**
+     * @desc 改变导航栏颜色时的动画时长
+     * @desc 默认为 0
+     */
+    colorAnimationDuration: number;
+    /**
+     * @desc 改变导航栏颜色时的动画方式
+     */
+    colorAnimationTimingFunc: "linear" | "easeIn" | "easeOut" | "easeInOut";
+  },
+  {}
+>;
+
 /** 用于展示微信开放的数据 */
 type TOpenData = TComponent<
   {
