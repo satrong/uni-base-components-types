@@ -2317,21 +2317,83 @@ type TNavigator = TComponent<
   {}
 >;
 
-/** 音频 */
+/**
+ * @desc audio error 事件对象
+ */
+type TAudioErrorEvent = TEvent & {
+  detail: {
+    errMsg: number;
+  };
+};
+/**
+ * @desc audio timeupdate 事件对象
+ */
+type TAudioTimeupdateEvent = TEvent & {
+  detail: {
+    currentTime: number;
+    duration: number;
+  };
+};
+/**
+ * @desc 音频
+ */
 type TAudio = TComponent<
   {
-    /** 是否循环播放 */
+    /**
+     * @desc audio 组件的唯一标识符
+     */
+    id: string;
+    /**
+     * @desc 要播放音频的资源地址
+     */
+    src: string;
+    /**
+     * @desc 是否循环播放
+     * @desc 默认为 false
+     */
     loop: boolean;
-    /** webview 指向网页的链接 */
-    src: string | string;
-    /** 控件 */
-    controls: any[];
-    /** 视频封面的图片网络资源地址，如果 controls 属性值为 false 则设置 poster 无效 */
+    /**
+     * @desc 是否显示默认控件
+     * @desc 默认为 false
+     */
+    controls: boolean;
+    /**
+     * @desc 默认控件上的音频封面的图片资源地址
+     * @desc 如果 controls 值为 false 则无效
+     */
     poster: string;
-    /** 默认控件上的音频名字，如果 controls 属性值为 false 则设置 name 无效 */
+    /**
+     * @desc 默认控件上的音频名字
+     * @desc 如果 controls 值为 false 则无效
+     * @desc 默认为“未知音频”
+     */
     name: string;
-    /** 默认控件上的作者名字，如果 controls 属性值为 false 则设置 author 无效 */
+    /**
+     * @desc 默认控件上的作者名字
+     * @desc 如果 controls 值为 false 则无效
+     * @desc 默认为“未知作者”
+     */
     author: string;
+    /**
+     * @desc 发生错误时触发
+     */
+    onError: (event: TAudioErrorEvent) => void;
+    /**
+     * @desc 开始/继续播放时触发
+     */
+    onPlay: (event: TEvent) => void;
+    /**
+     * @desc 暂停播放时触发
+     */
+    onPause: (event: TEvent) => void;
+    /**
+     * @desc 播放进度改变时触发
+     */
+    onTimeupdate: (event: TAudioTimeupdateEvent) => void;
+    /**
+     * @desc 播放到末尾时触发
+     */
+    onEnded: (event: TEvent) => void;
   },
   {}
 >;
