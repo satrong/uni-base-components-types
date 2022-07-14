@@ -459,7 +459,7 @@ type TSwiper = TComponent<
     disableTouch: boolean;
     /**
      * @desc 是否监听用户的触摸事件
-     * @desc 只在初始化时有效，不能动态变更
+     * @desc 只在初始化时有效，不支持动态修改
      * @desc 默认为 true
      */
     touchable: boolean;
@@ -819,7 +819,7 @@ type TRichText = TComponent<
     selectable: boolean;
     /**
      * @desc 是否阻止长按图片时弹起默认菜单
-     * @desc 只在初始化时有效，不能动态变更
+     * @desc 只在初始化时有效，不支持动态修改
      * @desc 默认为 false
      */
     imageMenuPrevent: boolean;
