@@ -1815,25 +1815,55 @@ type TPickerView = TComponent<
  */
 type TPickerViewColumn = TComponent<{}, {}>;
 
-/** 单项选择器，内部由多个 radio 组成 */
+/**
+ * @desc radio-group change 事件对象
+ */
+type TRadioGroupChangeEvent = TEvent & {
+  detail: {
+    value: string;
+  };
+};
+/**
+ * @desc 单项选择器，内部由多个 radio 组成
+ * @desc 通过把多个 radio 包裹在一个 radio-group 下，实现这些 radio 的单选
+ */
 type TRadioGroup = TComponent<
   {
-    /** 是否禁用。 */
-    disabled: boolean;
+    /**
+     * @desc 选中项发生变化时触发
+     */
+    onChange: (event: TRadioGroupChangeEvent) => void;
   },
   {}
 >;
 
-/** 单选项目 */
+/**
+ * @desc 单选项目
+ */
 type TRadio = TComponent<
   {
-    /** 是否禁用。 */
-    disabled: boolean;
-    /** radio当前取值 */
-    value: number;
-    /** 是否选中 */
+    /**
+     * @desc 在 form 中作为 key
+     */
+    name: string;
+    /**
+     * @desc radio 标识
+     * @desc 被选中时，radio-group 的 change 事件会携带该 value
+     */
+    value: string;
+    /**
+     * @desc 当前是否选中
+     * @desc 默认为 false
+     */
     checked: boolean;
-    /** switch 的颜色，同 css 的 color */
+    /**
+     * @desc 是否禁用
+     * @desc 默认为 false
+     */
+    disabled: boolean;
+    /**
+     * @desc radio 的颜色
+     */
     color: string;
   },
   {}
