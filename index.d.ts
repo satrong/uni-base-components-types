@@ -2398,6 +2398,65 @@ type TAudio = TComponent<
   {}
 >;
 
+/**
+ * @desc camera initdone 事件对象
+ */
+type TCameraInitdoneEvent = TEvent & {
+  detail: {
+    maxZoom: number;
+  };
+};
+/**
+ * @desc 页面内嵌的区域相机组件
+ */
+type TCamera = TComponent<
+  {
+    /**
+     * @desc 应用模式，不支持动态修改
+     * @desc 默认为 normal
+     */
+    mode: "normal" | "scanCode";
+    /**
+     * @desc 分辨率，不支持动态修改
+     * @desc 默认为 medium
+     */
+    resolution: "low" | "medium" | "high";
+    /**
+     * @desc 摄像头朝向
+     * @desc 默认为 back
+     */
+    devicePosition: "front" | "back";
+    /**
+     * @desc 闪光灯
+     * @desc 默认为 auto
+     */
+    flash: "auto" | "on" | "off" | "torch";
+    /**
+     * @desc 期望的相机帧数据尺寸
+     * @desc 默认为 medium
+     */
+    frameSize: "small" | "medium" | "large";
+    /**
+     * @desc 摄像头在非正常终止时触发
+     */
+    onStop: (event: TEvent) => void;
+    /**
+     * @desc 用户不允许使用摄像头时触发
+     */
+    onError: (event: TEvent) => void;
+    /**
+     * @desc 相机初始化完成时触发
+     */
+    onInitdone: (event: TCameraInitdoneEvent) => void;
+    /**
+     * @desc 扫码识别成功时触发
+     * @desc mode="scanCode" 时生效
+     */
+    onScancode: (event: TEvent) => void;
+  },
+  {}
+>;
+
 /** 图片 */
 type TImage = TComponent<
   {
@@ -2549,17 +2608,6 @@ type TWebView = TComponent<
     src: string | string;
     /** webview 的样式 */
     webviewStyles: Record<string, any> | boolean;
-  },
-  {}
->;
-
-/** 相机组件 */
-type TCamera = TComponent<
-  {
-    /** 前置或后置，值为front, back */
-    flash: "back" | "front";
-    /** 闪光灯，值为auto, on, off */
-    devicePosition: string;
   },
   {}
 >;
