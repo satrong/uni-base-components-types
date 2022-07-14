@@ -2457,14 +2457,26 @@ type TCamera = TComponent<
   {}
 >;
 
-/** 图片 */
+/**
+ * @desc image load 事件对象
+ */
+type TImageLoadEvent = TEvent & {
+  height: string;
+  width: string;
+};
+/**
+ * @desc 图片
+ */
 type TImage = TComponent<
   {
-    /** 是否循环播放 */
-    loop: boolean;
-    /** webview 指向网页的链接 */
-    src: string | string;
-    /** 图片裁剪、缩放的模式 */
+    /**
+     * @desc 图片资源地址
+     */
+    src: string;
+    /**
+     * @desc 图片裁剪、缩放的模式
+     * @desc 默认为 scaleToFill
+     */
     mode:
       | "scaleToFill"
       | "aspectFit"
@@ -2480,14 +2492,40 @@ type TImage = TComponent<
       | "top right"
       | "bottom left"
       | "bottom right";
-    /** 图片懒加载。只针对page与scroll-view下的image有效 */
+    /**
+     * @desc 是否开启图片懒加载
+     * @desc 只对 page 与 scroll-view 下的 image 有效
+     * @desc 默认为 false
+     */
     lazyLoad: boolean;
-    /** 图片显示动画效果 */
+    /**
+     * @desc 是否使用图片显示动画效果
+     * @desc 默认为 true
+     */
     fadeShow: boolean;
-    /** 默认不解析 webP 格式，只支持网络资源 */
+    /**
+     * @desc 在系统不支持 webp 的情况下是否单独启用 webp
+     * @desc 默认为 false
+     */
     webp: boolean;
-    /** 开启长按图片显示识别小程序码菜单 */
+    /**
+     * @desc 是否开启长按图片显示识别小程序码菜单
+     * @desc 默认为 false
+     */
     showMenuByLongpress: boolean;
+    /**
+     * @desc 是否能拖动图片
+     * @desc 默认为 true
+     */
+    draggable: boolean;
+    /**
+     * @desc 图片加载错误时触发
+     */
+    onError: (event: TEvent) => void;
+    /**
+     * @desc 图片加载完毕时触发
+     */
+    onLoad: (event: TImageLoadEvent) => void;
   },
   {}
 >;
