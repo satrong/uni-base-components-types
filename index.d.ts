@@ -3954,6 +3954,34 @@ type TNavigationBar = TComponent<
   {}
 >;
 
+/**
+ * @desc 自定义 tabBar 组件
+ */
+type TCustomTabBar = TComponent<
+  {
+    /**
+     * @desc 选项的排列方向
+     * @desc 默认为 horizontal
+     */
+    direction: "vertical" | "horizontal";
+    /**
+     * @desc 是否显示 icon
+     * @desc 默认为 false
+     */
+    showIcon: boolean;
+    /**
+     * @desc 选中的 tabBar 选项索引值
+     * @desc 默认为 0
+     */
+    selected: number;
+    /**
+     * @desc 点击事件
+     */
+    onTabItemTap: (index: number, pagePath: string, text: string) => void;
+  },
+  {}
+>;
+
 /** 用于展示微信开放的数据 */
 type TOpenData = TComponent<
   {
