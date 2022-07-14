@@ -1753,24 +1753,67 @@ type TPicker = TComponent<
   {}
 >;
 
-/** 嵌入页面的滚动选择器 */
+/**
+ * @desc picker-view change 事件对象
+ */
+type TPickerViewChangeEvent = TEvent & {
+  detail: {
+    value: number[];
+  };
+};
+/**
+ * @desc 嵌入页面的滚动选择器，比 picker 更灵活
+ */
 type TPickerView = TComponent<
   {
-    /** 是否禁用。 */
-    disabled: boolean;
-    /** radio当前取值 */
-    value: number;
-    /** 设置选择器中间选中框的样式 */
+    /**
+     * @desc 依次表示 picker-view 内 picker-view-column 选择的下标
+     * @desc 超出 picker-view-column 可选项长度时，选择最后一项
+     */
+    value: number[];
+    /**
+     * @desc 设置选择器中间选中框的样式
+     */
     indicatorStyle: string;
-    /** 设置选择器中间选中框的类名 */
+    /**
+     * @desc 设置选择器中间选中框的类名
+     */
     indicatorClass: string;
-    /** 设置蒙层的样式 */
+    /**
+     * @desc 设置蒙层的样式
+     */
     maskStyle: string;
-    /** 设置蒙层的类名 */
+    /**
+     * @desc 设置蒙层的类名
+     */
     maskClass: string;
+    /**
+     * @desc 是否在手指松开时立即触发 change 事件
+     * @desc 若不开启则会在滚动动画结束后触发 change 事件
+     * @desc 默认为 false
+     */
+    immediateChange: boolean;
+    /**
+     * @desc value 改变时触发
+     */
+    onChange: (event: TPickerViewChangeEvent) => void;
+    /**
+     * @desc 滚动选择开始时触发
+     */
+    onPickstart: (event: TEvent) => void;
+    /**
+     * @desc 滚动选择结束时触发
+     */
+    onPickend: (event: TEvent) => void;
   },
   {}
 >;
+
+/**
+ * @desc picker-view 直接子组件
+ * @desc 子节点的高度会自动设置成与 picker-view 的选中框的高度一致
+ */
+type TPickerViewColumn = TComponent<{}, {}>;
 
 /** 单项选择器，内部由多个 radio 组成 */
 type TRadioGroup = TComponent<
@@ -2109,15 +2152,6 @@ type TWebView = TComponent<
     src: string | string;
     /** webview 的样式 */
     webviewStyles: Record<string, any> | boolean;
-  },
-  {}
->;
-
-/** 仅可放置于 picker-view 中，其孩子节点的高度会自动设置成与picker-view的选中框的高度一致 */
-type TPickerViewColumn = TComponent<
-  {
-    /** 是否禁用。 */
-    disabled: boolean;
   },
   {}
 >;
