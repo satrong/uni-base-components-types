@@ -2823,6 +2823,355 @@ type TVideo = TComponent<
   {}
 >;
 
+/**
+ * @desc live-player statechage 事件对象
+ */
+type TLivePlayerStatechangeEvent = TEvent & {
+  detail: {
+    code: number;
+  };
+};
+/**
+ * @desc live-player netstatus 事件对象
+ */
+type TLivePlayerNetstatusEvent = TEvent & {
+  detail: {
+    info: {
+      videoBitrate: number;
+      audioBitrate: number;
+      videoFPS: number;
+      videoGOP: number;
+      netSpeed: number;
+      netJitter: number;
+      netQualityLevel: number;
+      videoWidth: number;
+      videoHeight: number;
+      videoCache: number;
+      audioCache: number;
+      vDecCacheSize: number;
+      vSumCacheSize: number;
+      avPlayInterval: number;
+      avRecvInterval: number;
+      audioCacheThreshold: number;
+    };
+  };
+};
+/**
+ * @desc live-player fullscreenchagne 事件对象
+ */
+type TLivePlayerFullscreenchangeEvent = TEvent & {
+  detail: {
+    direction: "vertical" | "horizontal";
+    fullScreen: boolean;
+  };
+};
+/**
+ * @desc 实时音视频播放（直播拉流）
+ */
+type TLivePlayer = TComponent<
+  {
+    /**
+     * @desc 唯一标志符
+     */
+    id: string;
+    /**
+     * @desc 音视频地址
+     */
+    src: string;
+    /**
+     * @desc 实时模式
+     * @desc 默认为 live
+     */
+    mode: "live" | "RTC";
+    /**
+     * @desc 是否自动播放
+     * @desc 默认为 false
+     */
+    autoplay: boolean;
+    /**
+     * @desc 是否静音
+     * @desc 默认为 false
+     */
+    muted: boolean;
+    /**
+     * @desc 画面方向
+     * @desc 默认为 vertical
+     */
+    orientation: "vertical" | "horizontal";
+    /**
+     * @desc 填充模式
+     * @desc 默认为 contain
+     */
+    objectFit: "contain" | "fillCrop";
+    /**
+     * @desc 进入后台时是否静音
+     * @desc 默认为 false
+     */
+    backgroundMute: boolean;
+    /**
+     * @desc 声音输出方式
+     * @desc 默认为 speaker
+     */
+    soundMode: "speaker" | "ear";
+    /**
+     * @desc 最小缓冲区
+     * @desc 单位为 s
+     * @desc 默认为 1
+     */
+    minCache: string;
+    /**
+     * @desc 最大缓冲区
+     * @desc 单位为 s
+     * @desc 默认为 3
+     */
+    maxCache: string;
+    /**
+     * @desc 设置小窗模式，空字符串或通过数组形式设置多种模式
+     */
+    pictureInPictureMode:
+      | "push"
+      | "pop"
+      | []
+      | ["push", "pop"]
+      | ["pop", "push"]
+      | ["push"]
+      | ["pop"];
+    /**
+     * @desc 播放状态变化时触发
+     */
+    onStatechange: (event: TLivePlayerStatechangeEvent) => void;
+    /**
+     * @desc 网络状态变化时触发
+     */
+    onNetstatus: (event: TLivePlayerNetstatusEvent) => void;
+    /**
+     * @desc 全屏变化时触发
+     */
+    onFullscreenchange: (event: TLivePlayerFullscreenchangeEvent) => void;
+    /**
+     * @desc 播放音量变化时触发
+     */
+    onAudiovolumenotify: (event: TEvent) => void;
+    /**
+     * @desc 播放器进入小窗时触发
+     */
+    onEnterpictureinpicture: (event: TEvent) => void;
+    /**
+     * @desc 播放器退出小窗时触发
+     */
+    onLeavepictureinpicture: (event: TEvent) => void;
+  },
+  {}
+>;
+
+/**
+ * @desc live-pusher statechage 事件对象
+ */
+type TLivePusherStatechangeEvent = TEvent & {
+  detail: {
+    code: number;
+  };
+};
+/**
+ * @desc live-pusher netstatus 事件对象
+ */
+type TLivePusherNetstatusEvent = TEvent & {
+  detail: {
+    info: {
+      videoBitrate: number;
+      audioBitrate: number;
+      videoFPS: number;
+      videoGOP: number;
+      netSpeed: number;
+      netJitter: number;
+      netQualityLevel: number;
+      videoWidth: number;
+      videoHeight: number;
+      videoCache: number;
+      audioCache: number;
+      vDecCacheSize: number;
+      vSumCacheSize: number;
+      avPlayInterval: number;
+      avRecvInterval: number;
+      audioCacheThreshold: number;
+    };
+  };
+};
+/**
+ * @desc live-pusher error 事件对象
+ */
+type TLivePushErrorEvent = TEvent & {
+  detail: {
+    errMsg: string;
+    errCode: number;
+  };
+};
+/**
+ * @desc live-pusher bgmprogress 事件对象
+ */
+type TLivePushBgmprogressEvent = TEvent & {
+  detail: {
+    direction: "vertical" | "horizontal";
+    fullScreen: boolean;
+  };
+};
+/**
+ * @desc 实时音视频录制（直播推流）
+ */
+type TLivePusher = TComponent<
+  {
+    /**
+     * @desc 推流地址，支持 RTMP 协议
+     */
+    url: string;
+    /**
+     * @desc 推流视频模式
+     * @desc 默认为 SD
+     */
+    mode: "SD" | "HD" | "FHD";
+    /**
+     * @desc 是否自动推流
+     * @desc 默认为 false
+     */
+    autopush: boolean;
+    /**
+     * @desc 视频宽高比例
+     * @desc 默认为 3:2
+     */
+    aspect: number;
+    /**
+     * @desc 是否静音
+     * @desc 默认为 false
+     */
+    muted: boolean;
+    /**
+     * @desc 是否开启摄像头
+     * @desc 默认为 true
+     */
+    enableCamera: boolean;
+    /**
+     * @desc 自动聚焦
+     * @desc 默认为 true
+     */
+    autoFocus: boolean;
+    /**
+     * @desc 美颜
+     * @desc 取值范围为 0 - 9
+     * @desc 默认为 0
+     */
+    beauty: number;
+    /**
+     * @desc 美白
+     * @desc 取值范围为 0 - 9
+     * @desc 默认为 0
+     */
+    whiteness: number;
+    /**
+     * @desc 画面方向
+     * @desc 默认为 vertical
+     */
+    orientation: "vertical" | "horizontal";
+    /**
+     * @desc 最小码率
+     * @desc 默认为 200
+     */
+    minBitrate: number;
+    /**
+     * @desc 最大码率
+     * @desc 默认为 1000
+     */
+    maxBitrate: number;
+    /**
+     * @desc 音质
+     * @desc 默认为 high
+     */
+    audioQuality: "high" | "low";
+    /**
+     * @desc 进入后台时推流的等待画面
+     */
+    waitingImage: string;
+    /**
+     * @desc 等待画面资源的 MD5 值
+     */
+    waitingImageMd5: string;
+    /**
+     * @desc 是否调整焦距
+     * @desc 默认为 false
+     */
+    zoom: boolean;
+    /**
+     * @desc 摄像头朝向
+     * @desc 默认为 front
+     */
+    devicePosition: "front" | "back";
+    /**
+     * @desc 进入后台时是否静音
+     * @desc 默认为 false
+     */
+    backgroundMute: boolean;
+    /**
+     * @desc 设置推流画面是否镜像，产生的效果在 live-player 呈现
+     * @desc 默认为 false
+     */
+    remoteMirror: boolean;
+    /**
+     * @desc 控制本地预览画面是否镜像
+     * @desc 默认为 auto
+     */
+    localMirror: "auto" | "enable" | "disable";
+    /**
+     * @desc 音频混响类型
+     * @desc 默认为 0
+     */
+    audioReverbType: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+    /**
+     * @desc 是否开启麦克风
+     * @desc 默认为 true
+     */
+    enableMic: boolean;
+    /**
+     * @desc 是否开启音频自动增益
+     * @desc 默认为 false
+     */
+    enableAgc: boolean;
+    /**
+     * @desc 是否开启音频噪声抑制
+     * @desc 默认为 false
+     */
+    enableAns: boolean;
+    /**
+     * @desc 音量类型
+     * @desc 默认为 auto
+     */
+    audioVolumeType: "auto" | "media" | "voicecall";
+    /**
+     * @desc 播放状态变化时触发
+     */
+    onStatechange: (event: TLivePusherStatechangeEvent) => void;
+    /**
+     * @desc 网络状态变化时触发
+     */
+    onNetstatus: (event: TLivePusherNetstatusEvent) => void;
+    /**
+     * @desc 渲染错误时触发
+     */
+    onError: (event: TLivePushErrorEvent) => void;
+    /**
+     * @desc 背景音开始播放时触发
+     */
+    onBgmstart: (event: TEvent) => void;
+    /**
+     * @desc 背景音进度变化时触发
+     */
+    onBgmprogress: (event: TLivePushBgmprogressEvent) => void;
+    /**
+     * @desc 背景音播放完成时触发
+     */
+    onBgmcomplete: (event: TEvent) => void;
+  },
+  {}
+>;
+
 /** 地图 */
 type TMap = TComponent<
   {
@@ -2868,66 +3217,6 @@ type TWebView = TComponent<
     src: string | string;
     /** webview 的样式 */
     webviewStyles: Record<string, any> | boolean;
-  },
-  {}
->;
-
-/** 实时音视频播放 */
-type TLivePlayer = TComponent<
-  {
-    /** webview 指向网页的链接 */
-    src: string | string;
-    /** live（直播），RTC（实时通话，该模式时延更低） */
-    mode: "live" | "RTC";
-    /** 自动播放 */
-    autoplay: boolean;
-    /** 是否静音 */
-    muted: boolean;
-    /** 画面方向，可选值有 vertical，horizontal */
-    orientation: "vertical" | "horizontal";
-    /** 填充模式，可选值有 contain，fillCrop */
-    objectFit: "contain" | "fillCrop";
-    /** 进入后台时是否静音 */
-    backgroundMute: boolean;
-    /** 最小缓冲区，单位s */
-    minCache: string;
-    /** 最大缓冲区，单位s */
-    maxCache: string;
-  },
-  {}
->;
-
-/** 实时音视频录制 */
-type TLivePusher = TComponent<
-  {
-    /** 推流地址。目前仅支持 flv, rtmp 格式 */
-    url: string;
-    /** 推流视频模式，可取值：SD（标清）, HD（高清）, FHD（超清）。 */
-    mode: "SD" | "HD" | "FHD";
-    /** 自动推流 */
-    autopush: boolean;
-    /** 是否静音 */
-    muted: boolean;
-    /** 开启摄像头 */
-    enableCamera: boolean;
-    /** 获取焦点 */
-    autoFocus: boolean;
-    /** 画面方向，可选值有 vertical，horizontal */
-    orientation: "vertical" | "horizontal";
-    /** 美颜 */
-    beauty: number;
-    /** 美白 */
-    aspect: number;
-    /** 最小码率 */
-    minBitrate: string;
-    /** 最大码率 */
-    maxBitrate: string;
-    /** 进入后台时推流的等待画面 */
-    waitingImage: string;
-    /** 等待画面资源的MD5值 */
-    waitingImageMd5: string;
-    /** 进入后台时是否静音 */
-    backgroundMute: boolean;
   },
   {}
 >;
