@@ -3741,43 +3741,120 @@ type TPageMeta = TComponent<
   {}
 >;
 
-/** 是一个数据库查询组件，它是对uni-clientdb的js库的再封装。 */
+/**
+ * @desc 数据库查询组件，对 uni-clientdb 的 js 库的再封装
+ */
 type TUnicloudDb = TComponent<
   {
-    /** 表名 */
-    collection: string | string;
-    /** 查询字段，多个字段用 `,` 分割 */
-    field: string | string;
-    /** 查询条件 */
-    where: string | string;
-    /** 云端执行数据库查询的前或后，触发某个action函数操作，进行预处理或后处理 */
-    action: string | string;
-    /** 排序字段及正序倒叙设置 */
+    /**
+     * @desc 服务空间信息
+     */
+    spaceInfo: {
+      provider: string;
+      spaceId: string;
+      clientSecret: string;
+      endpoint: string;
+    };
+    /**
+     * @desc 表名
+     */
+    collection: string;
+    /**
+     * @desc 指定要查询的字段，多个字段用 , 分割
+     */
+    field: string;
+    /**
+     * @desc 查询条件，过滤记录 */
+    where: string;
+    /**
+     * @desc 排序字段及正序倒序设置
+     */
     orderby: string;
-    /** 对数据进行分组 */
-    groupby: string;
-    /** 对数据进行分组统计 */
-    groupField: string;
-    /** 是否对数据查询结果中重复的记录进行去重 */
-    distinct: boolean;
-    /** add 多次查询的集合, replace 当前查询的集合 */
+    /**
+     * @desc 手动指定使用的关联关系
+     */
+    foreignKey: string;
+    /**
+     * @desc 分页策略
+     * @desc 默认为 add
+     */
     pageData: "add" | "replace";
-    /** 当前页 */
+    /**
+     * @desc 当前页
+     */
     pageCurrent: number;
-    /** 每页数据数量 */
+    /**
+     * @desc 每页数据数量
+     */
     pageSize: number;
-    /** 指定查询结果是否返回数组第一条数据，默认 false。在false情况下返回的是数组，即便只有一条结果，也需要[0]的方式获取。在true下，直接返回结果数据，少一层数组 */
-    getone: boolean;
-    /** 是否查询总数量 */
+    /**
+     * @desc 是否查询总数据条数
+     * @desc 默认 false
+     */
     getcount: boolean;
-    /** 是否查询树状结构数据 */
+    /**
+     * @desc 指定查询结果是否仅返回数组第一条数据
+     * @desc false：结果数据外会再用数组包裹一层，一般用于列表页
+     * @desc true：直接返回结果数据，一般用于非列表页
+     * @desc 默认 false
+     */
+    getone: boolean;
+    /**
+     * @desc 云端执行数据库查询的前或后，触发某个 action 函数操作，进行预处理或后处理
+     * @desc 场景：前端无权操作的数据，比如阅读数 +1
+     */
+    action: string;
+    /**
+     * @desc 是否查询树状结构数据
+     */
     gettree: boolean;
-    /** gettree的第一层级条件，此初始条件可以省略，不传startWith时默认从最顶级开始查询 */
+    /**
+     * @desc gettree 的第一层级条件
+     * @desc 此初始条件可以省略，不传 startWith 时默认从最顶级开始查询
+     */
     startwith: string;
-    /** gettree查询返回的树的最大层级。超过设定层级的节点不会返回。默认10级，最大15，最小1 */
+    /**
+     * @desce gettree查询返回的树的最大层级，超过设定层级的节点不会返回
+     * @desc 取值范围为 1 - 15
+     * @dsec 默认为 10*/
     limitlevel: number;
-    /** 是否手动加载数据，默认为 false，页面onready时自动联网加载数据 */
-    manual: boolean;
+    /**
+     * @desc 对数据进行分组
+     */
+    groupby: string;
+    /**
+     * @desc 对数据进行分组统计
+     */
+    groupField: string;
+    /**
+     * @desc 是否对数据查询结果中重复的记录进行去重
+     * @desc 默认为 false
+     */
+    distinct: boolean;
+    /**
+     * @desc 加载数据时机
+     * @desc 默认为 auto
+     */
+    loadtime: "auto" | "onready" | "manual";
+    /**
+     * @desc 发行 H5 ssr 时有效，用于保证服务器端渲染和前端加载的数据对应
+     * @desc 页面同时出现 2 个及以上 unicloud-db 组件需要配置此属性，且要保证值整个应用唯一
+     * @desc 默认根据页面路径 + unicloud-db 组件代码中的行号生成唯一值
+     */
+    ssrKey: string;
+    /**
+     * @desc 成功回调
+     * @desc 联网返回结果后，若希望先修改下数据再渲染界面，则在本方法里对 data 进行修改
+     */
+    onLoad: (
+      data: any,
+      ended: boolean,
+      pagination: { size: number; count: number }
+    ) => void;
+    /**
+     * @desc 失败回调
+     */
+    onError: (event: TEvent) => void;
   },
   {}
 >;
