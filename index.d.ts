@@ -1957,17 +1957,45 @@ type TSlider = TComponent<
   {}
 >;
 
-/** 开关选择器 */
+/**
+ * @desc switch change 事件对象
+ */
+type TSwitchChangeEvent = TEvent & {
+  detail: {
+    value: boolean;
+  };
+};
+/**
+ * @desc 开关选择器
+ */
 type TSwitch = TComponent<
   {
-    /** 是否选中 */
+    /**
+     * @desc 在 form 中作为 key
+     */
+    name: string;
+    /**
+     * @desc 是否选中
+     * @desc 默认为 false
+     */
     checked: boolean;
-    /** 开放数据类型 */
-    type: string;
-    /** switch 的颜色，同 css 的 color */
-    color: string;
-    /** 是否禁用。 */
+    /**
+     * @desc 是否禁用
+     * @desc 默认为 false
+     */
     disabled: boolean;
+    /**
+     * @desc 样式
+     */
+    type: "switch" | "checkbox";
+    /**
+     * @desc switch 的颜色
+     */
+    color: string;
+    /**
+     * @desc checked 改变时触发
+     */
+    onChange: (event: TSwitchChangeEvent) => void;
   },
   {}
 >;
