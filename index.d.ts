@@ -3172,29 +3172,294 @@ type TLivePusher = TComponent<
   {}
 >;
 
-/** 地图 */
+/**
+ * @desc map markertap 事件对象
+ */
+type TMapMarkertapEvent = TEvent & {
+  detail: {
+    markerId: number;
+  };
+};
+/**
+ * @desc map labeltap 事件对象
+ */
+type TMapLabeltapEvent = TEvent & {
+  detail: {
+    markerId: number;
+  };
+};
+/**
+ * @desc map callouttap 事件对象
+ */
+type TMapCallouttapEvent = TEvent & {
+  detail: {
+    markerId: number;
+  };
+};
+/**
+ * @desc map controltap 事件对象
+ */
+type TMapControltapEvent = TEvent & {
+  detail: {
+    controlId: number;
+  };
+};
+/**
+ * @desc map anchorpointtap 事件对象
+ */
+type TMapAnchorpointtapEvent = TEvent & {
+  detail: {
+    longitude: number;
+    latitude: number;
+  };
+};
+/**
+ * @desc map poitap 事件对象
+ */
+type TMapPoitapEvent = TEvent & {
+  detail: {
+    name: string;
+    longitude: number;
+    latitude: number;
+  };
+};
+/**
+ * @desc 地图组件，用于展示地图
+ */
 type TMap = TComponent<
   {
-    /** 中心经度 */
+    /**
+     * @desc 中心经度
+     */
     longitude: number;
-    /** 中心纬度 */
+    /**
+     * @desc 中心纬度
+     */
     latitude: number;
-    /** 是否支持双指缩放，默认缩放手势生效区域是在 movable-view 内。 */
-    scale: boolean;
-    /** 标记点 */
-    markers: any[];
-    /** 即将移除，请使用 markers */
-    covers: any[];
-    /** 路线 */
-    polyline: any[];
-    /** 圆 */
-    circles: any[];
-    /** 控件 */
-    controls: any[];
-    /** 缩放视野以包含所有给定的坐标点 */
-    includePoints: any[];
-    /** 显示带有方向的当前定位点 */
+    /**
+     * @desc 缩放级别
+     * @desc 取值范围为 3 - 20
+     * @desc 默认为 16
+     */
+    scale: number;
+    /**
+     * @desc 主题，仅 Android 支持，不支持动态修改
+     * @desc 默认为 normal
+     */
+    theme: "normal" | "satellite";
+    /**
+     * @desc 最小缩放级别
+     * @desc 默认为 3
+     */
+    minScale: number;
+    /**
+     * @desc 最大缩放级别
+     * @desc 默认为 20
+     */
+    maxScale: number;
+    /**
+     * @desc 个性化地图配置的 style，不支持动态修改
+     * @desc 默认为 1
+     */
+    layerStyle: number | string;
+    /**
+     * @desc 标记点
+     */
+    markers: {
+      id: number;
+      latitude: number;
+      longitude: number;
+      title: string;
+      iconPath: string;
+      rotate: number;
+      alpha: number;
+      width: number;
+      height: number;
+      callout: {
+        content: string;
+        color: string;
+        fontSize: number;
+        borderRadius: number;
+        borderWidth: number;
+        borderColor: string;
+        bgColor: string;
+        padding: number;
+        display: "BYCLICK" | "ALWAYS";
+        textAlign: "left" | "right" | "center";
+      };
+      label: {
+        content: string;
+        color: string;
+        fontSize: number;
+        x: number;
+        y: number;
+        anchorX: number;
+        anchorY: number;
+        borderWidth: number;
+        borderColor: string;
+        borderRadius: number;
+        bgColor: string;
+        padding: number;
+        textAlign: "left" | "right" | "center";
+        customCallout: {
+          display: "BYLCICK" | "ALWAYS";
+        };
+        ariaLabel: string;
+        joinCluster: boolean;
+      };
+    }[];
+    /**
+     * @desc 路线，指定一系列坐标点，从数组第一项连线至最后一项
+     */
+    polyline: {
+      points: { latitude: number; longitude: number }[];
+      color: string;
+      width: number;
+      dottedLie: boolean;
+      arrowLine: boolean;
+      arrowIconPath: string;
+      borderColor: string;
+      borderWidth: number;
+      colorList: string[];
+      level: "abovelabels" | "abovebuildings" | "aboveroads";
+    }[];
+    /**
+     * @desc 圆，在地图上显示圆
+     */
+    circles: {
+      latitude: number;
+      longitude: number;
+      color: string;
+      fillColor: string;
+      radius: number;
+      strokeWidth: number;
+      level: "abovelabels" | "abovebuildings" | "aboveroads";
+    }[];
+    /**
+     * @desc 控件，不随着地图移动
+     */
+    controls: {
+      id: number;
+      position: {
+        left: number;
+        top: number;
+        width: number;
+        height: number;
+      };
+      iconPath: string;
+      clickable: boolean;
+    }[];
+    /**
+     * @desc 缩放视野以包含所有给定的坐标点
+     */
+    includePoints: { latitude: number; longitude: number }[];
+    /**
+     * @desc 是否显示 3D 楼块
+     * @desc 默认为 false
+     */
+    enable3D: boolean;
+    /**
+     * @desc 是否显示指南针
+     * @desc 默认为 false
+     */
+    showCompass: boolean;
+    /**
+     * @desc 是否支持缩放
+     * @dsec 默认为 true
+     */
+    enableZoom: boolean;
+    /**
+     * @desc 是否支持拖动
+     * @desc 默认为 true
+     */
+    enableScroll: boolean;
+    /**
+     * @desc 是否支持旋转
+     * @desc 默认为 false
+     */
+    enableRotate: boolean;
+    /**
+     * @desc 是否开启俯视
+     * @desc 默认为 false
+     */
+    enableOverlooking: boolean;
+    /**
+     * @desc 是否开启卫星图
+     * @desc 默认为 false
+     */
+    enableSatellite: boolean;
+    /**
+     * @desc 是否开启实时路况
+     * @desc 默认为 false
+     */
+    enableTraffice: boolean;
+    /**
+     * @desc 是否展示 POI 点
+     * @desc 默认为 false
+     */
+    enablePoi: boolean;
+    /**
+     * @desc 是否展示建筑物
+     * @desc 默认为 false
+     */
+    enableBuilding: false;
+    /**
+     * @desc 是否显示带有方向的当前定位点
+     * @desc 默认为 false
+     */
     showLocation: boolean;
+    /**
+     * @desc 多边形，指定一系列坐标点，生成闭合多边形
+     */
+    polygons: {
+      points: { latitude: number; longitude: number }[];
+      strokeWidth: number;
+      strokeColor: string;
+      fillColor: string;
+      zIndex: number;
+      level: "abovelabels" | "abovebuildings" | "aboveroads";
+    }[];
+    /**
+     * @desc 是否展示室内地图
+     * @desc 默认为 false
+     */
+    enableIndoorMap: boolean;
+    /**
+     * @desc 点击标记点时触发
+     */
+    onMarkertap: (event: TMapMarkertapEvent) => void;
+    /**
+     * @desc 点击 label 时触发
+     */
+    onLabeltap: (event: TMapLabeltapEvent) => void;
+    /**
+     * @desc 点击标记点对应的气泡时触发
+     */
+    onCallouttap: (event: TMapCallouttapEvent) => void;
+    /**
+     * @desc 点击控件时触发
+     */
+    onControltap: (event: TMapControltapEvent) => void;
+    /**
+     * @desc 视野发生变化时触发
+     */
+    onRegionchange: (event: TEvent) => void;
+    /**
+     * @desc 点击地图时触发
+     */
+    onTap: (event: TEvent) => void;
+    /**
+     * @desc 地图渲染更新完成时触发
+     */
+    onUpdated: (event: TEvent) => void;
+    /**
+     * @desc 点击定位标时触发
+     */
+    onAnchorpointtap: (event: TMapAnchorpointtapEvent) => void;
+    /**
+     * @desc 点击地图 poi 点时触发
+     */
+    onPoitap: (event: TMapPoitapEvent) => void;
   },
   {}
 >;
