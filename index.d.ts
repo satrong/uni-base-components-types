@@ -2530,73 +2530,295 @@ type TImage = TComponent<
   {}
 >;
 
-/** 视频 */
+/**
+ * @desc video timeupdate 事件对象
+ */
+type TVideoTimeupdateEvent = TEvent & {
+  detail: {
+    currentTime: number;
+    duration: number;
+  };
+};
+/**
+ * @desc video fullscreenchange 事件对象
+ */
+type TVideoFullscreenchangeEvent = TEvent & {
+  detail: {
+    fullScreen: boolean;
+    direction: "vertical" | "horizontal";
+  };
+};
+/**
+ * @desc video progress 事件对象
+ */
+type TVideoProgressEvent = TEvent & {
+  detail: {
+    buffered: number;
+  };
+};
+/**
+ * @desc video loadedmetadata 事件对象
+ */
+type TVideoLoadedmetadataEvent = TEvent & {
+  detail: {
+    width: number;
+    height: number;
+    duration: number;
+  };
+};
+/**
+ * @desc video fullscreenclick 事件对象
+ */
+type TVideoFullscreenclickEvent = TEvent & {
+  detail: {
+    screenX: number;
+    screenY: number;
+    screenWidth: number;
+    screenHeight: number;
+  };
+};
+/**
+ * @desc video controlstoggle 事件对象
+ */
+type TVideoControlstoggleEvent = TEvent & {
+  detail: {
+    show: boolean;
+  };
+};
+/**
+ * @desc 视频播放组件
+ */
 type TVideo = TComponent<
   {
-    /** 是否循环播放 */
-    loop: boolean;
-    /** webview 指向网页的链接 */
-    src: string | string;
-    /** 指定视频初始播放位置 */
-    initialTime: number;
-    /** 指定视频长度 */
-    duration: number;
-    /** 控件 */
-    controls: any[];
-    /** 弹幕列表 */
-    danmuList: any[];
-    /** 是否显示弹幕按钮，只在初始化时有效，不能动态变更 */
-    danmuBtn: boolean;
-    /**  是否展示弹幕，只在初始化时有效，不能动态变更 */
-    enableDanmu: boolean;
-    /** 自动播放 */
+    /**
+     * @desc 要播放视频的资源地址
+     */
+    src: string;
+    /**
+     * @desc 是否自动播放
+     * @desc 默认为 false
+     */
     autoplay: boolean;
-    /** 是否静音 */
+    /**
+     * @desc 是否循环播放
+     * @desc 默认为 false
+     */
+    loop: boolean;
+    /**
+     * @desc 是否静音播放
+     * @desc 默认为 false
+     */
     muted: boolean;
-    /** 在非全屏模式下，是否开启亮度与音量调节手势 */
+    /**
+     * @desc 指定视频初始播放位置
+     * @desc 单位为 s
+     */
+    initialTime: number;
+    /**
+     * @desc 指定视频长度
+     * @desc 单位为 s
+     */
+    duration: number;
+    /**
+     * @desc 是否显示默认播放控件（播放/暂停按钮、播放进度、时间）
+     * @desc 默认为 true
+     */
+    controls: boolean;
+    /**
+     * @desc 弹幕列表
+     */
+    danmuList: { text: string; color: string; time: number }[];
+    /**
+     * @desc 是否显示弹幕按钮，不支持动态修改
+     * @desc 默认为 false
+     */
+    danmuBtn: boolean;
+    /**
+     * @desc 是否展示弹幕，不支持动态修改
+     * @desc 默认为 false
+     */
+    enableDanmu: boolean;
+    /**
+     * @desc 在非全屏模式下，是否开启亮度与音量调节手势
+     * @desc 默认为 false
+     */
     pageGesture: boolean;
-    /** movable-view 的移动方向。 */
-    direction: "all" | "vertical" | "horizontal" | "none";
-    /**  若不设置，宽度大于240时才会显示 */
+    /**
+     * @desc 设置全屏时视频的方向，不指定则根据宽高比自动判断
+     */
+    direction: 0 | 90 | -90;
+    /**
+     * @desc 若不设置，宽度大于 240 时才会显示
+     * @desc 默认为 true
+     */
     showProgress: boolean;
-    /** 是否显示全屏按钮 */
+    /**
+     * @desc 是否显示全屏按钮
+     * @desc 默认为 true
+     */
     showFullscreenBtn: boolean;
-    /** 是否显示视频底部控制栏的播放按钮 */
+    /**
+     * @desc 是否显示视频底部控制栏的播放按钮
+     * @desc 默认为 true
+     */
     showPlayBtn: boolean;
-    /** 是否显示视频中间的播放按钮 */
+    /**
+     * @desc 是否显示视频中间的播放按钮
+     * @desc 默认为 true
+     */
     showCenterPlayBtn: boolean;
-    /** 是否开启控制进度的手势 */
+    /**
+     * @desc 是否显示 loading 控件
+     * @desc 默认为 true
+     */
+    showLoading: boolean;
+    /**
+     * @desc 是否开启控制进度的手势
+     * @desc 默认为 true
+     */
     enableProgressGesture: boolean;
-    /** 当视频大小与 video 容器大小不一致时，视频的表现形式。 */
+    /**
+     * @desc 当视频大小与 video 容器大小不一致时，视频的表现形式
+     */
     objectFit: "contain" | "fill" | "cover";
-    /** 视频封面的图片网络资源地址，如果 controls 属性值为 false 则设置 poster 无效 */
+    /**
+     * @desc 视频封面的图片网络资源地址
+     * @desc 如果 controls 值为 false 则无效
+     */
     poster: string;
-    /** 是否显示静音按钮 */
+    /**
+     * @desc 是否显示静音按钮
+     * @decs 默认为 false
+     */
     showMuteBtn: boolean;
-    /** 视频的标题，全屏时在顶部展示 */
+    /**
+     * @desc 视频的标题，全屏时在顶部展示
+     */
     title: string;
-    /** 播放按钮的位置 */
-    playBtnPosition: string;
-    /** 是否开启播放手势，即双击切换播放、暂停 */
+    /**
+     * @desc 播放按钮的位置
+     * @desc 默认为 bottom
+     */
+    playBtnPosition: "bottom" | "center";
+    /**
+     * @desc 移动网络提醒样式
+     * @desc 默认为 1
+     */
+    mobilenetHintType: 0 | 1;
+    /**
+     * @desc 是否开启播放手势，即双击切换播放、暂停
+     * @desc 默认为 false
+     */
     enablePlayGesture: boolean;
-    /** 当跳转到其它小程序页面时，是否自动暂停本页面的视频 */
+    /**
+     * @desc 当跳转到其它小程序页面时，是否自动暂停本页面的视频
+     * @desc 默认为 true
+     */
     autoPauseIfNavigate: boolean;
-    /** 当跳转到其它微信原生页面时，是否自动暂停本页面的视频 */
+    /**
+     * @desc 当跳转到其它微信原生页面时，是否自动暂停本页面的视频
+     * @desc 默认为 true
+     */
     autoPauseIfOpenNative: boolean;
-    /** 在非全屏模式下，是否开启亮度与音量调节手势（同 page-gesture） */
+    /**
+     * @desc 在非全屏模式下，是否开启亮度与音量调节手势（同 page-gesture）
+     * @desc 默认为 false
+     */
     vslideGesture: boolean;
-    /** 在全屏模式下，是否开启亮度与音量调节手势 */
+    /**
+     * @desc 在全屏模式下，是否开启亮度与音量调节手势
+     * @desc 默认为 true
+     */
     vslideGestureInFullscreen: boolean;
-    /** 视频前贴广告单元ID */
+    /**
+     * @desc 视频前贴广告单元ID
+     */
     adUnitId: string;
-    /** 用于给搜索等场景作为视频封面展示，建议使用无播放 icon 的视频封面图，只支持网络地址 */
+    /**
+     * @desc 用于给搜索等场景作为视频封面展示
+     * @desc 建议使用无播放 icon 的视频封面图
+     * @desc 只支持网络地址
+     */
     posterForCrawler: string;
-    /** 解码器选择 */
-    codec: string;
-    /** 是否对 http、https 视频源开启本地缓存 */
+    /**
+     * @desc 解码器选择
+     * @desc 默认为 hardware
+     */
+    codec: "hardware" | "software";
+    /**
+     * @desc 是否对 http、https 视频源开启本地缓存
+     * @desc 默认为 true
+     */
     httpCache: boolean;
-    /** 播放策略 */
-    playStrategy: number;
+    /**
+     * @desc 播放策略
+     * @desc 默认为 0
+     */
+    playStrategy: 0 | 1 | 2;
+    /**
+     * @desc HTTP 请求 Header
+     */
+    header: Record<string, any>;
+    /**
+     * @desc 开始/继续播放时触发
+     */
+    onPlay: (event: TEvent) => void;
+    /**
+     * @desc 暂停播放时触发
+     */
+    onPause: (event: TEvent) => void;
+    /**
+     * @desc 播放到末尾时触发
+     */
+    onEnded: (event: TEvent) => void;
+    /**
+     * @desc 播放进度变化时触发
+     */
+    onTimeupdate: (event: TVideoTimeupdateEvent) => void;
+    /**
+     * @desc 视频进入和退出全屏时触发
+     */
+    onFullscreenchange: (event: TVideoFullscreenchangeEvent) => void;
+    /**
+     * @desc 视频缓冲时触发
+     */
+    onWaiting: (event: TEvent) => void;
+    /**
+     * @desc 视频播放出错时触发
+     */
+    onError: (event: TEvent) => void;
+    /**
+     * @desc 加载进度变化时触发
+     */
+    onProgress: (event: TVideoProgressEvent) => void;
+    /**
+     * @desc 视频资源开始加载时触发
+     */
+    onLoadeddata: (event: TEvent) => void;
+    /**
+     * @desc 开始加载数据时触发
+     */
+    onLoadstart: (event: TEvent) => void;
+    /**
+     * @desc 拖动进度条结束时触发
+     */
+    onSeeked: (event: TEvent) => void;
+    /**
+     * @desc 拖动进度条时触发
+     */
+    onSeeking: (event: TEvent) => void;
+    /**
+     * @desc 视频元数据加载完成时触发
+     */
+    onLoadedmetadata: (event: TVideoLoadedmetadataEvent) => void;
+    /**
+     * @desc 视频播放全屏播放点击时触发
+     */
+    onFullscreenclick: (event: TVideoFullscreenclickEvent) => void;
+    /**
+     * @desc 切换 controls 显示隐藏时触发
+     */
+    onControlstoggle: (event: TVideoControlstoggleEvent) => void;
   },
   {}
 >;
