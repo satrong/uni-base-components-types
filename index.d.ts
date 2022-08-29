@@ -6,7 +6,7 @@ import type {
 } from 'vue'
 type PublicProps = VNodeProps & AllowedComponentProps & ComponentCustomProps;
 
-type TComponent<P extends Record<string, any>, E extends EmitsOptions> = DefineComponent<{}, {}, {}, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, E, string, PublicProps, Readonly<ExtractPropTypes<P>>>
+type TComponent<P extends Record<string, any>, E extends EmitsOptions> = DefineComponent<Pick<P, 'value'>, {}, {}, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, E, string, PublicProps, Readonly<ExtractPropTypes<Omit<P, 'value'>>>>
 
 interface EventHandler<T = any> extends Event {
   detail: T;
