@@ -8,6 +8,11 @@ type PublicProps = VNodeProps & AllowedComponentProps & ComponentCustomProps;
 
 type TComponent<P extends Record<string, any>, E extends EmitsOptions> = DefineComponent<{}, {}, {}, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, E, string, PublicProps, Readonly<ExtractPropTypes<P>>>
 
+interface EventHandler<T = any> extends Event {
+  detail: T;
+  [x: string]: any;
+}
+
 /** block节点 */
 type TBlock = TComponent<{
 
@@ -326,7 +331,7 @@ type TPickerView = TComponent<{
   /** 是否禁用。 */
   disabled: boolean;
   /** radio当前取值 */
-  value: number;
+  value: number[];
   /** 设置选择器中间选中框的样式 */
   indicatorStyle: string;
   /** 设置选择器中间选中框的类名 */
@@ -335,7 +340,13 @@ type TPickerView = TComponent<{
   maskStyle: string;
   /** 设置蒙层的类名 */
   maskClass: string;
-}, {}>;
+  /** 是否在手指松开时立即触发 change 事件。若不开启则会在滚动动画结束后触发 change 事件 */
+  immediateChange: boolean;
+}, {
+  change: (eventHandler: EventHandler) => void;
+  pickstart: (eventHandler: EventHandler) => void;
+  pickend: (eventHandler: EventHandler) => void;
+}>;
 
 /** 单项选择器，内部由多个 radio 组成 */
 type TRadioGroup = TComponent<{
