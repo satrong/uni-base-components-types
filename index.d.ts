@@ -260,12 +260,14 @@ type TForm = TComponent<{
 
 /** 输入框 */
 type TInput = TComponent<{
-  /** 是否禁用。 */
-  disabled: boolean;
-  /** radio当前取值 */
-  value: number;
+  /** 输入框的初始内容 */
+  value: string;
   /** 开放数据类型 */
   type: string;
+  /** 文本区域的语义，根据类型自动填充
+   * @description 仅 App-nvue-iOS 支持
+   */
+  textContentType: string;
   /** 是否是密码类型 */
   password: boolean;
   /** 提示信息。 */
@@ -274,6 +276,8 @@ type TInput = TComponent<{
   placeholderStyle: string;
   /** 指定 placeholder 的样式类 */
   placeholderClass: string;
+  /** 是否禁用。 */
+  disabled: boolean;
   /** 最大输入长度，设置为 -1 的时候不限制最大长度 */
   maxlength: number;
   /** 指定光标与键盘的距离，单位 px 。取 textarea 距离底部的距离和 cursor-spacing 指定的距离的最小值作为光标与键盘的距离 */
@@ -282,9 +286,15 @@ type TInput = TComponent<{
   autoFocus: boolean;
   /** 获取焦点 */
   focus: boolean;
-  /** 设置键盘右下角按钮的文字 */
+  /**
+   * 设置键盘右下角按钮的文字
+   * @default 'done'
+   */
   confirmType: 'send' | 'search' | 'next' | 'go' | 'done';
-  /** 点击键盘右下角按钮时是否保持键盘不收起 */
+  /** 
+   * 点击键盘右下角按钮时是否保持键盘不收起
+   * @default false
+   */
   confirmHold: boolean;
   /** 指定focus时的光标位置 */
   cursor: number;
@@ -292,9 +302,30 @@ type TInput = TComponent<{
   selectionStart: number;
   /**  光标结束位置，自动聚集时有效，需与selection-satrt搭配使用 */
   selectionEnd: number;
-  /** 键盘弹起时，是否自动上推页面 */
+  /**
+   * 键盘弹起时，是否自动上推页面
+   * @default true
+   */
   adjustPosition: boolean;
-}, {}>;
+  /**
+   * focus时，点击页面的时候不收起键盘
+   * @description 微信小程序2.8.2
+   * @default false
+   */
+  holdKeyboard: boolean;
+  /**
+   * 键盘收起时，是否自动失去焦点
+   * @description App-Vue 3.0.0+
+   * @default false
+   */
+  autoBlur: boolean;
+}, {
+  input: (eventHandler: EventHandler<{ value: string }>) => void;
+  focus: (eventHandler: EventHandler<{ value: string, height: number }>) => void;
+  blur: (eventHandler: EventHandler<{ value: string }>) => void;
+  confirm: (eventHandler: EventHandler<{ value: string }>) => void;
+  keyboardheightchange: (eventHandler: EventHandler<{ height: number, duration: number }>) => void;
+}>;
 
 /** 用来改进表单组件的可用性，使用for属性找到对应的id，或者将控件放在该标签下，当点击时，就会触发对应的控件 */
 type TLabel = TComponent<{
