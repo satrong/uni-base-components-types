@@ -347,15 +347,34 @@ type TPicker = TComponent<{
   rangeKey: string;
   /** radio当前取值 */
   value: number;
-  /** mode为time：表示有效时间范围的开始，字符串格式为"hh:mm"；mode为date：表示有效日期范围的开始，字符串格式为"YYYY-MM-DD" */
+  /**
+   * 大屏时UI类型，支持 picker、select、auto，默认在 iPad 以 picker 样式展示而在 PC 以 select 样式展示
+   * @description H5 2.9.9+
+   * @default 'auto'
+   */
+  selectorType: 'picker' | 'select' | 'auto';
+  /** 
+   * mode为time：表示有效时间范围的开始，字符串格式为 `hh:mm`
+   * mode为date：表示有效日期范围的开始，字符串格式为 `YYYY-MM-DD`
+   */
   start: string;
-  /** mode为time：表示有效时间范围的结束，字符串格式为"hh:mm"；mode为date：表示有效日期范围的结束，字符串格式为"YYYY-MM-DD" */
+  /**
+   * mode为time：表示有效时间范围的结束，字符串格式为 `hh:mm`
+   * mode为date：表示有效日期范围的结束，字符串格式为 `YYYY-MM-DD`
+   */
   end: string;
-  /** 有效值 year,month,day，表示选择器的粒度 */
+  /**
+   * 有效值 year,month,day，表示选择器的粒度
+   * @description H5、App 2.6.3+、微信小程序、百度小程序、字节跳动小程序、飞书小程序
+   * @default 'day'
+   */
   fields: 'year' | 'month' | 'day';
   /** 可为每一列的顶部添加一个自定义的项 */
   customItem: string;
-}, {}>;
+}, {
+  change: (eventHandler: EventHandler<{ value: number[] }>) => void;
+  cancel: (eventHandler: EventHandler) => void;
+}>;
 
 /** 嵌入页面的滚动选择器 */
 type TPickerView = TComponent<{
@@ -374,7 +393,7 @@ type TPickerView = TComponent<{
   /** 是否在手指松开时立即触发 change 事件。若不开启则会在滚动动画结束后触发 change 事件 */
   immediateChange: boolean;
 }, {
-  change: (eventHandler: EventHandler) => void;
+  change: (eventHandler: EventHandler<{ value: number[] }>) => void;
   pickstart: (eventHandler: EventHandler) => void;
   pickend: (eventHandler: EventHandler) => void;
 }>;
