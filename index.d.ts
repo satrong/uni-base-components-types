@@ -836,7 +836,7 @@ type TUnicloudDb = TComponent<{
   manual: boolean;
 }, {}>;
 
-declare module 'vue' {
+declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Block: TBlock;
     View: TView;

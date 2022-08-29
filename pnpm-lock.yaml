@@ -1,4 +1,4 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
   '@dcloudio/uni-helper-json': ^1.0.13
@@ -11,7 +11,7 @@ dependencies:
 
 devDependencies:
   '@types/node': 17.0.21
-  ts-node: 10.5.0_99a448058f874aec2a353d0e974167cc
+  ts-node: 10.5.0_tgseqbmpq5foykrvhuhjoqlhzq
   typescript: 4.5.5
 
 packages:
@@ -80,7 +80,7 @@ packages:
     resolution: {integrity: sha512-s8UhlNe7vPKomQhC1qFelMokr/Sc3AgNbso3n74mVPA5LTZwkB9NlXf4XPamLxJE8h0gh73rM94xvwRT2CVInw==}
     dev: true
 
-  /ts-node/10.5.0_99a448058f874aec2a353d0e974167cc:
+  /ts-node/10.5.0_tgseqbmpq5foykrvhuhjoqlhzq:
     resolution: {integrity: sha512-6kEJKwVxAJ35W4akuiysfKwKmjkbYxwQMTBaAxo9KKAx/Yd26mPUyhGz3ji+EsJoAgrLqVsYHNuuYwQe22lbtw==}
     hasBin: true
     peerDependencies:

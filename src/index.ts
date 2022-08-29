@@ -73,7 +73,7 @@ async function bootstrap() {
   }
 
   const results = baseTpl + contents.join('\n\n') + `\n
-declare module 'vue' {
+declare module '@vue/runtime-core' {
   export interface GlobalComponents {
 ${tags.map(el => `    ${el}: T${el};`).join('\n')}
   }
