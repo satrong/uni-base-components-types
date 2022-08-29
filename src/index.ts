@@ -21,8 +21,14 @@ function toCamel(str: string, isUpper = true) {
 function getType(type: string) {
   return type.toLowerCase().split('|').map(el => {
     let t = ''
-    if (baseType.includes(el)) t = el
-    else t = baseType.find(e => el.indexOf(e) > -1) || 'string'
+    // 指定 ts 类型
+    if(el.startsWith('ts:')) {
+      t = el.slice(3)
+    } else if (baseType.includes(el)) {
+      t = el
+    } else {
+      t = baseType.find(e => el.indexOf(e) > -1) || 'string'
+    }
 
     switch (t) {
       case 'array': return 'any[]';
