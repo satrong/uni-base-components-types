@@ -40,16 +40,61 @@ type TScrollView = TComponent<{
   upperThreshold: number;
   /** 距底部/右边多远时（单位px），触发 scrolltolower 事件 */
   lowerThreshold: number;
-  /** 滚动位置，可以使用 px 或者 rpx 为单位，在被设置时，页面会滚动到对应位置 */
-  scrollTop: string;
+  /** 设置竖向滚动条位置 */
+  scrollTop: string | number;
   /** 设置横向滚动条位置 */
-  scrollLeft: number;
+  scrollLeft: string | number;
   /**  值应为某子元素id（id不能以数字开头）。设置哪个方向可滚动，则在哪个方向滚动到该元素 */
   scrollIntoView: string;
   /** 在设置滚动条位置时使用动画过渡 */
   scrollWithAnimation: boolean;
-  /** iOS点击顶部状态栏、安卓双击标题栏时，滚动条返回顶部，只支持竖向 */
+  /**
+   * iOS点击顶部状态栏、安卓双击标题栏时，滚动条返回顶部，只支持竖向
+   * @supports 	app-nvue，微信小程序
+   */
   enableBackToTop: boolean;
+  /**
+   * 控制是否出现滚动条
+   * @supports App-nvue 2.1.5+
+   */
+  showScrollbar: boolean;
+  /**
+   * 开启自定义下拉刷新
+   * @supports H5、app-vue 2.5.12+,微信小程序基础库2.10.1+
+   */
+  refresherEnabled: boolean;
+  /**
+   * 设置自定义下拉刷新阈值
+   * @supports H5、app-vue 2.5.12+,微信小程序基础库2.10.1+
+   */
+  refresherThreshold: number;
+  /**
+   * 设置自定义下拉刷新默认样式，支持设置 black，white，none，none 表示不使用默认样式
+   * @default black
+   * @supports H5、app-vue 2.5.12+,微信小程序基础库2.10.1+
+   */
+  refresherDefaultStyle: string;
+  /**
+   * 设置自定义下拉刷新区域背景颜色
+   * @default #FFF
+   * @supports 	H5、app-vue 2.5.12+,微信小程序基础库2.10.1+
+   */
+  refresherBackground: string;
+  /**
+   * 设置当前下拉刷新状态，true 表示下拉刷新已经被触发，false 表示下拉刷新未被触发
+   * @supports H5、app-vue 2.5.12+,微信小程序基础库2.10.1+
+   */
+  refresherTriggered: boolean;
+  /**
+   * 启用 flexbox 布局。开启后，当前节点声明了 display: flex 就会成为 flex container，并作用于其孩子节点。
+   * @supports 微信小程序 2.7.3
+   */
+  enableFlex: boolean;
+  /**
+   * 开启 scroll anchoring 特性，即控制滚动位置不随内容变化而抖动，仅在 iOS 下生效，安卓下可参考 CSS overflow-anchor 属性。
+   * @supports 微信小程序 2.8.2
+   */
+  scrollAnchoring: boolean;
 }, {}>;
 
 /** media query 匹配检测节点 */
