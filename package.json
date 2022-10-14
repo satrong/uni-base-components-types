@@ -1,6 +1,6 @@
 {
   "name": "uni-base-components-types",
-  "version": "3.0.0-beta.2",
+  "version": "3.0.0-beta.3",
   "description": "uni-app基础组件的类型提示",
   "typings": "uni-base-components.d.ts",
   "scripts": {
