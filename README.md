@@ -1,4 +1,4 @@
-### 此仓库不再维护，请使用官方提供的类型 [uni-app-types](https://github.com/uni-helper/uni-app-types)
+### 此仓库不再维护，请使用 [uni-app-types](https://github.com/uni-helper/uni-app-types) 替代
 
 # uni-base-components-types
 
